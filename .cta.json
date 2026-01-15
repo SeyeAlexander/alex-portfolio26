@@ -1,0 +1,18 @@
+{
+  "projectName": "portfolio26",
+  "mode": "file-router",
+  "typescript": true,
+  "tailwind": true,
+  "packageManager": "npm",
+  "git": false,
+  "install": true,
+  "addOnOptions": {},
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": [
+    "start",
+    "shadcn",
+    "eslint",
+    "nitro"
+  ]
+}
