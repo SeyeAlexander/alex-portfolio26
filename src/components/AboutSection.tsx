@@ -4,7 +4,7 @@ export function AboutSection() {
   return (
     <section
       id="me"
-      className="relative z-10 py-32 px-4 md:px-[20px] flex flex-col items-center bg-cream text-black"
+      className="relative z-10 pt-10 pb-28 px-4 md:px-[20px] flex flex-col items-center bg-cream text-black"
     >
       <div className="max-w-4xl w-full text-center space-y-12">
         <h2 className="font-korium text-5xl md:text-[180px] font-bold text-black">

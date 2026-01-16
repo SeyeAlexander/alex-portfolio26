@@ -1,8 +1,14 @@
 import { useState } from 'react'
+import { useSounds } from '../hooks/useSounds'
 
 export function FooterSection() {
   const [isFlipped1, setIsFlipped1] = useState(false)
-  // const [isFlipped2, setIsFlipped2] = useState(false)
+  const { playSound } = useSounds()
+
+  const handleCardClick = () => {
+    playSound('switch')
+    setIsFlipped1(!isFlipped1)
+  }
 
   return (
     <footer className="relative z-10 bg-black text-cream pt-16 pb-10 px-4 md:px-[20px]">
@@ -11,7 +17,7 @@ export function FooterSection() {
           <div
             className="group relative cursor-pointer"
             style={{ perspective: '1000px' }}
-            onClick={() => setIsFlipped1(!isFlipped1)}
+            onClick={handleCardClick}
             title="tap"
           >
             {/* Tooltip */}
@@ -68,6 +74,7 @@ export function FooterSection() {
             href="#"
             onClick={(e) => {
               e.preventDefault()
+              playSound('handgun')
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }}
             className="font-korium select-none text-xl md:text-2xl leading-5 tracking-wider text-orange font-extrabold hover:opacity-80 transition-opacity"
@@ -82,6 +89,7 @@ export function FooterSection() {
             </p>
             <a
               href="mailto:ojubanirealex@gmail.com"
+              onClick={() => playSound('tap')}
               className="font-geist-mono text-orange hover:text-orange/80 text-sm md:text-base transition-colors"
             >
               ojubanirealex@gmail.com

@@ -1,6 +1,10 @@
 import { Link } from '@tanstack/react-router'
+import { useSounds } from '../hooks/useSounds'
+import { SoundToggle } from './SoundToggle'
 
 export function HeroSection() {
+  const { playSound } = useSounds()
+
   return (
     <section className="h-screen relative overflow-hidden flex flex-col bg-cream">
       {/* Grid Background */}
@@ -9,7 +13,11 @@ export function HeroSection() {
       {/* Header containing Logo and Nav */}
       <header className="relative z-10 pt-4 px-4 md:pt-5 md:px-[20px] flex items-center justify-between">
         <div className="pl-4 w-1/4">
-          <Link to="/" className="inline-block">
+          <Link
+            to="/"
+            className="inline-block"
+            onClick={() => playSound('handgun')}
+          >
             <Logo />
           </Link>
         </div>
@@ -19,6 +27,7 @@ export function HeroSection() {
           {/* Resume - centered in 2nd column (25%-50%) */}
           <a
             href="#resume"
+            onClick={() => playSound('tap')}
             className="absolute left-[37.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
           >
             Resume
@@ -26,10 +35,15 @@ export function HeroSection() {
           {/* Me - centered in 3rd column (50%-75%) */}
           <a
             href="#me"
+            onClick={() => playSound('tap')}
             className="absolute left-[62.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
           >
             Me
           </a>
+          {/* Sound Toggle - in 4th column (75%-100%) */}
+          <div className="absolute left-[96.5%] -translate-x-1/2 pointer-events-auto">
+            <SoundToggle />
+          </div>
         </nav>
       </header>
 
