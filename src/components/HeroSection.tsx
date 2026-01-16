@@ -14,23 +14,23 @@ export function HeroSection() {
           </Link>
         </div>
 
-        {/* Nav Items in middle grid columns */}
-        <nav className="flex-1 flex justify-center gap-[350px]">
+        {/* Nav Items positioned in middle grid columns */}
+        <nav className="absolute inset-x-0 top-4 md:top-5 flex pointer-events-none">
+          {/* Resume - centered in 2nd column (25%-50%) */}
           <a
             href="#resume"
-            className="font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95"
+            className="absolute left-[37.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
           >
             Resume
           </a>
+          {/* Me - centered in 3rd column (50%-75%) */}
           <a
             href="#me"
-            className="font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95"
+            className="absolute left-[62.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
           >
             Me
           </a>
         </nav>
-
-        <div className="w-1/4" />
       </header>
 
       {/* Main Content */}
@@ -97,7 +97,7 @@ function Crosshair({ className }: { className?: string }) {
 
 function Logo() {
   return (
-    <div className="font-korium select-none text-xl md:text-2xl leading-5 tracking-wider text-orange font-extrabold">
+    <div className="font-korium select-none text-xl md:text-2xl leading-5 tracking-wider text-orange hover:text-deep-orange transition-colors duration-300 ease-out font-extrabold">
       <div>SE</div>
       <div>YE</div>
     </div>

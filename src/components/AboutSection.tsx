@@ -7,11 +7,11 @@ export function AboutSection() {
       className="relative z-10 py-32 px-4 md:px-[20px] flex flex-col items-center bg-cream text-black"
     >
       <div className="max-w-4xl w-full text-center space-y-12">
-        <h2 className="font-korium text-5xl md:text-7xl font-bold text-black tracking-tighter">
+        <h2 className="font-korium text-5xl md:text-[180px] font-bold text-black">
           ABOUT ME
         </h2>
 
-        <div className="font-geist-mono text-base md:text-lg leading-relaxed text-black/70 max-w-3xl mx-auto text-left space-y-6">
+        <div className="font-geist-mono text-base text-black/70 max-w-2xl mx-auto text-left space-y-6">
           <p>
             I'm a{' '}
             <span className="text-black font-bold">Fullstack Developer</span>{' '}
@@ -42,7 +42,7 @@ export function AboutSection() {
           </p>
         </div>
 
-        <div className="pt-20">
+        <div>
           <TechStack />
         </div>
       </div>

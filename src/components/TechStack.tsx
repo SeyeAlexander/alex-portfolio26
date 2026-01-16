@@ -13,7 +13,6 @@ export function TechStack({ theme = 'light' }: { theme?: 'light' | 'dark' }) {
         <span>Cursor</span>
         <span>PostgreSQL</span>
         <span>Node.js</span>
-        <span>Vite</span>
         <span>Tailwind</span>
         <span>TypeScript</span>
       </div>
