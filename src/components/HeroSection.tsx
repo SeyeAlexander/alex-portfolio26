@@ -10,14 +10,14 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="h-screen relative overflow-hidden flex flex-col bg-cream"
+      className="min-h-screen relative overflow-hidden flex flex-col bg-cream"
     >
-      {/* Grid Background */}
+      {/* Grid Background - hidden on mobile for cleaner look */}
       <GridBackground />
 
       {/* Header containing Logo and Nav */}
       <header className="relative z-10 pt-4 px-4 md:pt-5 md:px-[20px] flex items-center justify-between">
-        <div className="pl-4 w-1/4">
+        <div className="md:pl-4 md:w-1/4">
           <Link
             to="/"
             className="inline-block"
@@ -27,9 +27,27 @@ export function HeroSection() {
           </Link>
         </div>
 
-        {/* Nav Items positioned in middle grid columns */}
-        <nav className="absolute inset-x-0 top-4 md:top-5 flex pointer-events-none">
-          {/* Me - centered in 2nd column (25%-50%) */}
+        {/* Mobile: Simple row layout | Desktop: Absolute positioned */}
+        <div className="flex items-center gap-4 md:hidden">
+          <a
+            href="#me"
+            onClick={() => playSound('tap')}
+            className="font-korium text-base font-medium tracking-wider text-black"
+          >
+            About
+          </a>
+          <a
+            href="#resume"
+            onClick={() => playSound('tap')}
+            className="font-korium text-base font-medium tracking-wider text-black"
+          >
+            Resume
+          </a>
+          <SoundToggle />
+        </div>
+
+        {/* Desktop Nav - hidden on mobile */}
+        <nav className="hidden md:flex absolute inset-x-0 top-5 pointer-events-none">
           <a
             href="#me"
             onClick={() => playSound('tap')}
@@ -37,7 +55,6 @@ export function HeroSection() {
           >
             About Me
           </a>
-          {/* Resume - centered in 3rd column (50%-75%) */}
           <a
             href="#resume"
             onClick={() => playSound('tap')}
@@ -45,7 +62,6 @@ export function HeroSection() {
           >
             Resume
           </a>
-          {/* Sound Toggle - in 4th column (75%-100%) */}
           <div className="absolute left-[96.5%] -translate-x-1/2 pointer-events-auto">
             <SoundToggle />
           </div>
@@ -53,21 +69,26 @@ export function HeroSection() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 relative z-10 flex flex-col pt-64">
-        {/* Name Display - Staggered */}
-        <div className="flex-1 flex items-center justify-center">
+      <main className="flex-1 relative z-10 flex flex-col justify-center px-6 md:px-0 md:pt-64">
+        {/* Name Display */}
+        <div className="flex items-center justify-center py-16 md:py-0">
           <NameDisplay />
         </div>
 
-        {/* Professional Summary */}
-        <div className="absolute top-[51%] right-3 pl-4 w-1/4">
+        {/* Professional Summary - Below name on mobile, absolute on desktop */}
+        <div className="md:absolute md:top-[51%] md:right-3 md:pl-4 md:w-1/4 mt-8 md:mt-0 px-4 md:px-0">
           <ShortSummary />
         </div>
 
-        {/* Info Rectangle */}
-        <div className="absolute bottom-[20px] h-14 left-[20px] right-[75%] z-20">
-          <ResumeButton />
+        {/* Button - Full width on mobile, positioned on desktop */}
+        <div className="mt-8 md:mt-0 px-4 md:px-0 md:absolute md:bottom-[20px] md:h-14 md:left-[20px] md:right-[75%] z-20">
+          <div className="h-14">
+            <ResumeButton />
+          </div>
         </div>
+
+        {/* Bottom spacing on mobile */}
+        <div className="h-8 md:hidden" />
       </main>
     </section>
   )
@@ -75,7 +96,7 @@ export function HeroSection() {
 
 function GridBackground() {
   return (
-    <div className="absolute inset-0 pointer-events-none select-none">
+    <div className="absolute inset-0 pointer-events-none select-none hidden md:block">
       {/* Vertical Lines */}
       <div className="absolute left-[20px] inset-y-0 w-px bg-grid" />
       <div className="absolute left-1/4 inset-y-0 w-px bg-grid" />
@@ -118,7 +139,6 @@ function Crosshair({ className }: { className?: string }) {
 function Logo() {
   return (
     <div className="font-korium select-none text-xl md:text-2xl leading-5 tracking-wider text-orange hover:text-deep-orange transition-colors duration-300 ease-out font-extrabold">
-      {/* SE - gets knocked up by YE, wobbles, then settles */}
       <motion.div
         initial={{ y: 0, x: 0, rotate: 0 }}
         animate={{
@@ -135,7 +155,6 @@ function Logo() {
       >
         SE
       </motion.div>
-      {/* YE - rises up to knock SE, wobbles opposite direction */}
       <motion.div
         initial={{ y: 8, x: 0, rotate: 0, opacity: 0 }}
         animate={{
@@ -158,24 +177,26 @@ function Logo() {
 }
 
 function NameDisplay() {
-  // Track scroll progress - complete by 30% scroll
   const { scrollYProgress } = useScroll()
 
-  // Both names use pixel-based transforms that Framer Motion can smoothly interpolate
-  // SEYE: starts 80px left of its natural position, moves right to center
-  // ALEXANDER: starts offset right (200px), animates to 0 (centered)
+  // Disable parallax on mobile for performance
   const seyeX = useTransform(scrollYProgress, [0, 0.3], [-200, -200])
   const alexanderOffset = useTransform(scrollYProgress, [0, 0.3], [200, 100])
 
   return (
     <div className="font-korium select-none text-black tracking-wide">
-      <div className="relative text-5xl md:text-8xl lg:text-[200px] leading-tight font-bold flex flex-col items-start">
-        {/* SEYE - fades in from top second, moves RIGHT to center on scroll */}
+      <div className="relative text-7xl md:text-8xl lg:text-[200px] leading-tight font-bold flex flex-col items-center md:items-start">
+        {/* SEYE */}
         <motion.p
-          className="-mb-8 lg:-mb-14"
+          className="-mb-4 md:-mb-8 lg:-mb-14"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          style={{ x: seyeX }}
+          style={{
+            x:
+              typeof window !== 'undefined' && window.innerWidth >= 768
+                ? seyeX
+                : 0,
+          }}
           transition={{
             duration: 0.6,
             ease: [0.25, 0.46, 0.45, 0.94] as const,
@@ -184,9 +205,14 @@ function NameDisplay() {
         >
           SEYE
         </motion.p>
-        {/* ALEXANDER - fades in from top first, moves LEFT to center on scroll */}
+        {/* ALEXANDER */}
         <motion.p
-          style={{ x: alexanderOffset }}
+          style={{
+            x:
+              typeof window !== 'undefined' && window.innerWidth >= 768
+                ? alexanderOffset
+                : 0,
+          }}
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{
@@ -205,7 +231,7 @@ function NameDisplay() {
 function ShortSummary() {
   return (
     <motion.div
-      className="font-geist-mono text-xs md:text-sm leading-relaxed text-black/60 max-w-xs"
+      className="font-geist-mono text-xs md:text-sm leading-relaxed text-black/60 max-w-xs text-center md:text-left mx-auto md:mx-0"
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{

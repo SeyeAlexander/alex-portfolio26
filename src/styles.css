@@ -265,3 +265,42 @@ html {
   scrollbar-width: thin;
   scrollbar-color: hsl(240 5% 26%) hsl(240 10% 3.9%);
 }
+
+/* ============================================================================
+   TOUCH DEVICE OPTIMIZATION
+   Disable hover/active states on touch devices for better UX
+   ============================================================================ */
+
+/* Only apply hover styles on devices that support hover (non-touch) */
+@media (hover: hover) and (pointer: fine) {
+  /* Hover styles will work normally on desktop */
+}
+
+/* On touch devices, prevent sticky hover states */
+@media (hover: none) {
+  /* Reset common hover transforms */
+  *:hover {
+    transform: none !important;
+  }
+
+  /* Preserve intentional interactive elements but remove hover scale */
+  a:hover,
+  button:hover {
+    opacity: 1 !important;
+  }
+}
+
+/* Better touch feedback using active state instead of hover */
+@media (pointer: coarse) {
+  /* Touch devices get faster transitions */
+  a,
+  button {
+    transition-duration: 0.1s !important;
+  }
+
+  /* Active state provides feedback on touch */
+  a:active,
+  button:active {
+    opacity: 0.7;
+  }
+}

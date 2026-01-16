@@ -73,7 +73,6 @@ function useCountUp(end: number, duration: number = 1500, delay: number = 0) {
   const hasInitialAnimated = useRef(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Animation function
   const runAnimation = (delayMs: number = 0) => {
     setTimeout(() => {
       setCount(0)
@@ -82,8 +81,6 @@ function useCountUp(end: number, duration: number = 1500, delay: number = 0) {
       const animate = (currentTime: number) => {
         const elapsed = currentTime - startTime
         const progress = Math.min(elapsed / duration, 1)
-
-        // Easing function for smooth deceleration
         const easeOut = 1 - Math.pow(1 - progress, 3)
         const currentValue = Math.floor(end * easeOut)
 
@@ -98,17 +95,14 @@ function useCountUp(end: number, duration: number = 1500, delay: number = 0) {
     }, delayMs)
   }
 
-  // Initial animation when coming into view
   useEffect(() => {
     if (isInView && !hasInitialAnimated.current) {
       hasInitialAnimated.current = true
       runAnimation(delay)
 
-      // Start interval for repeated animations (first at 20s, then every 10s)
       const firstTimeout = setTimeout(() => {
         setTriggerCount((c) => c + 1)
 
-        // Then every 10 seconds
         intervalRef.current = setInterval(() => {
           setTriggerCount((c) => c + 1)
         }, 10000)
@@ -123,14 +117,12 @@ function useCountUp(end: number, duration: number = 1500, delay: number = 0) {
     }
   }, [isInView, delay, end])
 
-  // Handle repeated animations with stagger
   useEffect(() => {
     if (triggerCount > 0 && isInView) {
       runAnimation(delay)
     }
   }, [triggerCount, delay, end, isInView])
 
-  // Reset when leaving view
   useEffect(() => {
     if (!isInView && hasInitialAnimated.current) {
       hasInitialAnimated.current = false
@@ -144,7 +136,6 @@ function useCountUp(end: number, duration: number = 1500, delay: number = 0) {
   return { count, ref }
 }
 
-// Animated number component with stagger index
 function AnimatedNumber({
   value,
   suffix,
@@ -156,7 +147,6 @@ function AnimatedNumber({
   className?: string
   staggerIndex?: number
 }) {
-  // Stagger delay: 0, 400ms, 800ms, 1200ms for indices 0-3
   const { count, ref } = useCountUp(value, 1500, staggerIndex * 400)
 
   return (
@@ -170,22 +160,22 @@ function AnimatedNumber({
 export function StatsSection() {
   return (
     <section id="stats" className="relative bg-black text-white">
-      {/* Grid Background - continues from Hero */}
+      {/* Grid Background - hidden on mobile */}
       <GridBackground />
 
       {/* Personal Details Bar */}
       <PersonalDetailsBar />
 
-      {/* Stats Grid */}
-      <StatsGrid />
+      {/* Stats Grid - Different layouts for mobile vs desktop */}
+      <MobileStatsGrid />
+      <DesktopStatsGrid />
     </section>
   )
 }
 
 function GridBackground() {
   return (
-    <div className="absolute inset-0 pointer-events-none select-none">
-      {/* Vertical Lines - same positions as Hero */}
+    <div className="absolute inset-0 pointer-events-none select-none hidden md:block">
       <div className="absolute left-[20px] inset-y-0 w-px bg-white/20" />
       <div className="absolute left-1/4 inset-y-0 w-px bg-white/20" />
       <div className="absolute left-1/2 inset-y-0 w-px bg-white/20" />
@@ -216,25 +206,30 @@ function PersonalDetailsBar() {
       variants={staggerContainer}
     >
       {/* Bottom horizontal line */}
-      <div className="absolute bottom-0 left-[20px] right-[20px] h-px bg-white/20" />
+      <div className="absolute bottom-0 left-4 right-4 md:left-[20px] md:right-[20px] h-px bg-white/20" />
 
-      {/* Crosshairs - Bottom line (5 points) */}
-      <Crosshair className="absolute bottom-[-10px] left-[20px]" />
-      <Crosshair className="absolute bottom-[-10px] left-1/4" />
-      <Crosshair className="absolute bottom-[-10px] left-1/2" />
-      {/* <Crosshair className="absolute bottom-[-10px] left-1/2" /> */}
-      <Crosshair className="absolute bottom-[-10px] left-3/4" />
-      <Crosshair className="absolute bottom-[-10px] right-[9px]" />
+      {/* Crosshairs - hidden on mobile */}
+      <div className="hidden md:block">
+        <Crosshair className="absolute bottom-[-10px] left-[20px]" />
+        <Crosshair className="absolute bottom-[-10px] left-1/4" />
+        <Crosshair className="absolute bottom-[-10px] left-1/2" />
+        <Crosshair className="absolute bottom-[-10px] left-3/4" />
+        <Crosshair className="absolute bottom-[-10px] right-[9px]" />
+      </div>
 
-      {/* Content Grid - 4 columns */}
-      <div className="relative grid grid-cols-4 py-6 md:py-8">
+      {/* Content Grid - 2 cols on mobile, 4 cols on desktop */}
+      <div className="relative grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0 py-6 md:py-8 px-4 md:px-0">
         {personalDetails.map((detail, index) => (
           <motion.div
             key={detail.label}
-            className="px-6 md:px-8"
+            className="md:px-8"
             style={{
-              // Align content to left of each column with proper offsets
-              marginLeft: index === 0 ? 'calc(20px - 1.5rem)' : 0,
+              marginLeft:
+                index === 0 &&
+                typeof window !== 'undefined' &&
+                window.innerWidth >= 768
+                  ? 'calc(20px - 1.5rem)'
+                  : 0,
             }}
             variants={fadeInUp}
           >
@@ -251,10 +246,54 @@ function PersonalDetailsBar() {
   )
 }
 
-function StatsGrid() {
+// Mobile Stats Grid - Simple 2x2 grid
+function MobileStatsGrid() {
   return (
     <motion.div
-      className="relative"
+      className="md:hidden px-4 py-8"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ margin: '-50px' }}
+      variants={staggerContainer}
+    >
+      <div className="grid grid-cols-2 gap-6">
+        {stats.map((stat, index) => (
+          <motion.div
+            key={stat.label}
+            className="border-b border-white/20 pb-6"
+            variants={fadeInUp}
+          >
+            <div className="flex gap-1 mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+            </div>
+            <p className="font-geist text-4xl font-bold leading-none">
+              <AnimatedNumber
+                value={stat.number}
+                suffix={stat.suffix}
+                staggerIndex={index}
+              />
+            </p>
+            <p className="font-geist-mono text-[10px] text-white tracking-widest mt-3 mb-2">
+              {stat.label}
+            </p>
+            <p className="font-geist-mono text-[10px] text-white/50 tracking-wide leading-relaxed">
+              {stat.description}
+            </p>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  )
+}
+
+// Desktop Stats Grid - Original complex layout
+function DesktopStatsGrid() {
+  return (
+    <motion.div
+      className="relative hidden md:block"
       initial="hidden"
       whileInView="visible"
       viewport={{ margin: '-100px' }}
@@ -262,14 +301,12 @@ function StatsGrid() {
     >
       {/* Row 1: Stats 0 (col 1) and Stats 1 (col 3-4) */}
       <div className="relative">
-        {/* Stat Box 1 - Column 1 (left-[20px] to left-1/4) */}
+        {/* Stat Box 1 - Column 1 */}
         <motion.div
           className="absolute left-[20px] w-[calc(25%-20px)] aspect-square"
           variants={fadeInUp}
         >
-          {/* Box border */}
-          <div className="absolute inset-0 border-b  border-white/20" />
-          {/* Content */}
+          <div className="absolute inset-0 border-b border-white/20" />
           <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
@@ -293,15 +330,13 @@ function StatsGrid() {
           </div>
         </motion.div>
 
-        {/* Stat Box 2 - Column 3 (left-1/2 to left-3/4) */}
+        {/* Stat Box 2 - Column 3 */}
         <motion.div
           className="absolute left-1/2 w-1/4 aspect-square"
           variants={fadeInUp}
         >
-          {/* Box border */}
           <div className="absolute inset-0 border-b border-white/20" />
           <Crosshair className="absolute bottom-[-280px] left-0" />
-          {/* Content */}
           <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
@@ -325,20 +360,17 @@ function StatsGrid() {
           </div>
         </motion.div>
 
-        {/* Spacer to maintain row height */}
         <div className="w-1/4 aspect-square" />
       </div>
 
-      {/* Row 2: Stats 2 (col 2) and Stats 3 (col 4) - offset lower */}
+      {/* Row 2: Stats 2 (col 2) and Stats 3 (col 4) */}
       <div className="relative -mt-[10%]">
-        {/* Stat Box 3 - Column 2 (left-1/4 to left-1/2) */}
+        {/* Stat Box 3 - Column 2 */}
         <motion.div
           className="absolute left-1/4 w-1/4 aspect-[1/1.15]"
           variants={fadeInUp}
         >
-          {/* Box border */}
           <div className="absolute inset-0 border-b border-white/20" />
-          {/* Content */}
           <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
@@ -362,14 +394,12 @@ function StatsGrid() {
           </div>
         </motion.div>
 
-        {/* Stat Box 4 - Column 4 (left-3/4 to right-[20px]) */}
+        {/* Stat Box 4 - Column 4 */}
         <motion.div
           className="absolute left-3/4 w-[calc(25%-20px)] aspect-[1/1.15]"
           variants={fadeInUp}
         >
-          {/* Box border */}
           <div className="absolute inset-0 border-b border-white/20" />
-          {/* Content */}
           <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
@@ -393,11 +423,9 @@ function StatsGrid() {
           </div>
         </motion.div>
 
-        {/* Spacer to maintain row height */}
         <div className="w-1/4 aspect-[1/1.15] ml-1/4" />
       </div>
 
-      {/* Bottom spacing */}
       <div className="h-16" />
     </motion.div>
   )
