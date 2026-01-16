@@ -64,32 +64,36 @@ const experiences = [
 // Project data for EStation
 const estationProjects = [
   {
-    id: 'e-cms',
-    title: 'E-CMS',
-    subtitle: 'Headless Content System',
-    description: 'JSON-driven field-based CMS for non-technical users.',
-    variant: 'white' as const,
-  },
-  {
-    id: 'swift-plan',
-    title: 'Swift Plan',
-    subtitle: 'Insurance Platform',
-    description: 'End-to-end plan management system.',
-    variant: 'black' as const,
-  },
-  {
-    id: 'caraten',
-    title: 'Caraten',
-    subtitle: 'B2B E-commerce',
-    description: '40+ page redesign with streaming SSR.',
-    variant: 'cream' as const,
-  },
-  {
     id: 'b2c-terminal',
     title: 'B2C Terminal',
     subtitle: 'POS System',
     description: 'Multi-terminal retail management.',
     variant: 'black' as const,
+    url: 'http://newb2c-admin-iocl73-894a62-134-209-140-121.traefik.me/login',
+  },
+  {
+    id: 'b2c-ecommerce',
+    title: 'B2C Ecommerce',
+    subtitle: 'Online Storefront',
+    description: 'Full-featured e-commerce platform.',
+    variant: 'cream' as const,
+    url: 'http://newb2c-web-phfnwx-0d6399-134-209-140-121.traefik.me/',
+  },
+  {
+    id: 'e-cms',
+    title: 'E-CMS',
+    subtitle: 'Headless Content System',
+    description: 'JSON-driven field-based CMS for non-technical users.',
+    variant: 'white' as const,
+    url: 'https://cms.estation.io/login',
+  },
+  {
+    id: 'swift-plan',
+    title: 'Swift',
+    subtitle: 'Insurance Platform',
+    description: 'End-to-end plan management system.',
+    variant: 'black' as const,
+    url: 'https://free-swift-eiced4-afdee3-134-209-140-121.traefik.me/',
   },
 ]
 
@@ -101,6 +105,7 @@ const neueProjects = [
     subtitle: 'Enterprise App',
     description: 'Notion-to-Webflow data mapping system.',
     variant: 'black' as const,
+    url: 'https://app.flozi.io/onboarding/login',
   },
   {
     id: 'layers',
@@ -108,6 +113,7 @@ const neueProjects = [
     subtitle: 'Freelance Platform',
     description: 'Blockchain-integrated wallet authentication.',
     variant: 'white' as const,
+    url: 'https://www.neue.world/case-studies/layers',
   },
   {
     id: 'figma-plugin',
@@ -115,6 +121,7 @@ const neueProjects = [
     subtitle: 'Figma Extension',
     description: 'Automated asset transfer tool.',
     variant: 'cream' as const,
+    url: 'https://www.neue.world/case-studies/layers',
   },
   {
     id: 'icca-dubai',
@@ -122,17 +129,18 @@ const neueProjects = [
     subtitle: 'Webflow Site',
     description: 'High-fidelity animations and components.',
     variant: 'white' as const,
+    url: 'https://www.iccadubai.ae/',
   },
 ]
 
-// Animation variants
+// Animation variants - faster for snappier feel
 const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.35,
       ease: [0.25, 0.46, 0.45, 0.94] as const,
     },
   },
@@ -143,8 +151,8 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
     },
   },
 }
@@ -217,8 +225,8 @@ function SectionHeader() {
         className="font-korium text-5xl md:text-[140px] lg:text-[180px] font-bold text-white text-center"
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        viewport={{ margin: '-50px' }}
+        transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         EXPERIENCE
       </motion.h2>
@@ -242,7 +250,7 @@ function AnimatedJobNumber({ number, isEven }: AnimatedJobNumberProps) {
       <motion.span
         initial={!is04 ? { opacity: 0, y: -50 } : { opacity: 1, y: 0 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ margin: '-50px' }}
         transition={{
           duration: 0.6,
           ease: [0.25, 0.46, 0.45, 0.94],
@@ -256,7 +264,7 @@ function AnimatedJobNumber({ number, isEven }: AnimatedJobNumberProps) {
           is04 ? { opacity: 0, rotateY: 90 } : { opacity: 1, rotateY: 0 }
         }
         whileInView={{ opacity: 1, rotateY: 0 }}
-        viewport={{ once: true }}
+        viewport={{ margin: '-50px' }}
         transition={{
           duration: 0.6,
           ease: [0.25, 0.46, 0.45, 0.94],
@@ -285,7 +293,7 @@ function JobCard({ experience, index }: JobCardProps) {
       className={`relative ${bgClass}`}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ margin: '-50px' }}
       variants={fadeInUp}
     >
       {/* Main content area */}
@@ -347,6 +355,7 @@ interface ProjectCardProps {
     subtitle: string
     description: string
     variant: 'white' | 'cream' | 'black'
+    url: string
   }
   index: number
 }
@@ -374,7 +383,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
 
   return (
     <a
-      href="https://drive.google.com/file/d/1fem6meDrWDGHMQ0nuL5MqodLnUWQ_f9L/view?usp=sharing"
+      href={project.url}
       target="_blank"
       rel="noopener noreferrer"
       className={`block p-6 md:p-8 transition-transform duration-200 hover:scale-[1.02] ${variantStyles[project.variant]}`}
@@ -400,7 +409,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         <p
           className={`font-geist-mono text-[40px] md:text-[50px] font-bold leading-none mt-2 ${subtitleStyles[project.variant]}`}
         >
-          V/{cardNumber}
+          W/{cardNumber}
         </p>
       </div>
 
@@ -425,7 +434,7 @@ function ProjectGrid({ projects, bgClass }: ProjectGridProps) {
       className={`${bgClass} py-8 md:py-12 px-6 md:px-12 lg:px-20`}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ margin: '-50px' }}
       variants={staggerContainer}
     >
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">

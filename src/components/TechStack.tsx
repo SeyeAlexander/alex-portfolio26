@@ -8,22 +8,22 @@ export function TechStack({ theme = 'light' }: { theme?: 'light' | 'dark' }) {
       <div
         className={`flex flex-wrap justify-center gap-x-12 gap-y-4 ${textColor}`}
       >
+        <span>TypeScript</span>
         <span>React</span>
         <span>shadcn</span>
+        <span>Tanstack</span>
         <span>Cursor</span>
         <span>PostgreSQL</span>
         <span>Node.js</span>
-        <span>Tailwind</span>
-        <span>TypeScript</span>
       </div>
 
       {/* Lower Row */}
       <div
         className={`flex flex-wrap justify-center gap-x-12 gap-y-4 ${textColor} ${opacity}`}
       >
+        <span>Figma</span>
         <span>Supabase</span>
         <span>Cloudflare</span>
-        <span>Figma</span>
         <span>Notion</span>
         <span>Drizzle</span>
       </div>

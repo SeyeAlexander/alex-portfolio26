@@ -131,10 +131,6 @@ export function FooterSection() {
               </svg>
             </a>
           </div>
-
-          <p className="font-geist-mono text-cream/40 text-xs">
-            TanStack again, coded in 5 fun hours ✨
-          </p>
         </div>
       </div>
 

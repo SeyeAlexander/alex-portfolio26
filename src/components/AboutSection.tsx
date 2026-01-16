@@ -17,19 +17,19 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.3,
+      staggerChildren: 0.06,
+      delayChildren: 0.15,
     },
   },
 }
 
 const paragraphVariant = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 15 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.3,
       ease: [0.25, 0.46, 0.45, 0.94] as const,
     },
   },
@@ -58,9 +58,9 @@ export function AboutSection() {
           className="font-korium text-5xl md:text-[180px] font-bold text-black"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ margin: '-100px' }}
           variants={fadeFromTop}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           ABOUT ME
         </motion.h2>
@@ -70,7 +70,7 @@ export function AboutSection() {
           className="font-geist-mono text-base text-black/70 max-w-2xl mx-auto text-left space-y-6"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={{ margin: '-50px' }}
           variants={staggerContainer}
         >
           <motion.p variants={paragraphVariant}>
@@ -107,12 +107,12 @@ export function AboutSection() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={{ margin: '-50px' }}
           variants={fadeFromBottom}
           transition={{
-            duration: 0.6,
+            duration: 0.35,
             ease: [0.25, 0.46, 0.45, 0.94],
-            delay: 0.5,
+            delay: 0.25,
           }}
         >
           <TechStack />

@@ -8,7 +8,10 @@ export function HeroSection() {
   const { playSound } = useSounds()
 
   return (
-    <section className="h-screen relative overflow-hidden flex flex-col bg-cream">
+    <section
+      id="hero"
+      className="h-screen relative overflow-hidden flex flex-col bg-cream"
+    >
       {/* Grid Background */}
       <GridBackground />
 
@@ -32,7 +35,7 @@ export function HeroSection() {
             onClick={() => playSound('tap')}
             className="absolute left-[37.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
           >
-            Me
+            About Me
           </a>
           {/* Resume - centered in 3rd column (50%-75%) */}
           <a

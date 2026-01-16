@@ -169,7 +169,7 @@ function AnimatedNumber({
 
 export function StatsSection() {
   return (
-    <section className="relative bg-black text-white">
+    <section id="stats" className="relative bg-black text-white">
       {/* Grid Background - continues from Hero */}
       <GridBackground />
 
@@ -212,7 +212,7 @@ function PersonalDetailsBar() {
       className="relative"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ margin: '-50px' }}
       variants={staggerContainer}
     >
       {/* Bottom horizontal line */}
@@ -257,7 +257,7 @@ function StatsGrid() {
       className="relative"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-100px' }}
+      viewport={{ margin: '-100px' }}
       variants={staggerContainer}
     >
       {/* Row 1: Stats 0 (col 1) and Stats 1 (col 3-4) */}
