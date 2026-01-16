@@ -10,7 +10,7 @@ export function SoundToggle() {
   const { enabled, toggleSound, playSound } = useSounds()
 
   const handleClick = () => {
-    playSound('tap')
+    playSound('switch')
     toggleSound()
   }
 

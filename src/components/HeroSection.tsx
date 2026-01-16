@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useSounds } from '../hooks/useSounds'
 import { SoundToggle } from './SoundToggle'
+import { ArrowUpRightIcon } from 'lucide-react'
 
 export function HeroSection() {
   const { playSound } = useSounds()
@@ -62,7 +63,7 @@ export function HeroSection() {
 
         {/* Info Rectangle */}
         <div className="absolute bottom-[20px] h-14 left-[20px] right-[75%] z-20">
-          <InfoRectangle />
+          <ResumeButton />
         </div>
       </main>
     </section>
@@ -224,13 +225,22 @@ function ShortSummary() {
   )
 }
 
-function InfoRectangle() {
+function ResumeButton() {
+  const { playSound } = useSounds()
+
   return (
-    <div className="bg-deep-orange text-white w-full h-full flex items-center justify-center gap-10">
-      <div className="font-korium text-2xl md:text-5xl font-bold">S</div>
-      <div className="font-geist-mono text-[10px] md:text-xs uppercase tracking-[0.2em] leading-tight font-medium">
+    <a
+      onClick={() => playSound('tap')}
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://drive.google.com/file/d/1fem6meDrWDGHMQ0nuL5MqodLnUWQ_f9L/view?usp=sharing"
+      className="group bg-deep-orange hover:bg-[#CC3300] cursor-pointer active:scale-[0.99] transition-transform duration-200 ease-out text-white w-full h-full flex items-center rounded-4xl justify-center gap-5"
+    >
+      <p className="font-geist-mono text-sm uppercase tracking-[0.2em] leading-tight font-medium">
         Software Engineer
-      </div>
-    </div>
+      </p>
+
+      <ArrowUpRightIcon className="w-5 h-5 transition-transform duration-300 ease-out group-hover:translate-x-2 group-hover:-translate-y-1" />
+    </a>
   )
 }

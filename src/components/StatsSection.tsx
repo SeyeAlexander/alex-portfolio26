@@ -215,25 +215,16 @@ function PersonalDetailsBar() {
       viewport={{ once: true, margin: '-50px' }}
       variants={staggerContainer}
     >
-      {/* Top horizontal line */}
-      <div className="absolute top-0 left-[20px] right-[20px] h-px bg-white/20" />
-
       {/* Bottom horizontal line */}
       <div className="absolute bottom-0 left-[20px] right-[20px] h-px bg-white/20" />
 
-      {/* Crosshairs - Top line (5 points) */}
-      <Crosshair className="absolute top-0 left-[20px]" />
-      <Crosshair className="absolute top-0 left-1/4" />
-      <Crosshair className="absolute top-0 left-1/2" />
-      <Crosshair className="absolute top-0 left-3/4" />
-      <Crosshair className="absolute top-0 right-[9px]" />
-
       {/* Crosshairs - Bottom line (5 points) */}
-      <Crosshair className="absolute bottom-0 left-[20px]" />
-      <Crosshair className="absolute bottom-0 left-1/4" />
-      <Crosshair className="absolute bottom-0 left-1/2" />
-      <Crosshair className="absolute bottom-0 left-3/4" />
-      <Crosshair className="absolute bottom-0 right-[9px]" />
+      <Crosshair className="absolute bottom-[-10px] left-[20px]" />
+      <Crosshair className="absolute bottom-[-10px] left-1/4" />
+      <Crosshair className="absolute bottom-[-10px] left-1/2" />
+      {/* <Crosshair className="absolute bottom-[-10px] left-1/2" /> */}
+      <Crosshair className="absolute bottom-[-10px] left-3/4" />
+      <Crosshair className="absolute bottom-[-10px] right-[9px]" />
 
       {/* Content Grid - 4 columns */}
       <div className="relative grid grid-cols-4 py-6 md:py-8">
@@ -277,7 +268,7 @@ function StatsGrid() {
           variants={fadeInUp}
         >
           {/* Box border */}
-          <div className="absolute inset-0 border-b border-r border-white/20" />
+          <div className="absolute inset-0 border-b  border-white/20" />
           {/* Content */}
           <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
@@ -308,7 +299,8 @@ function StatsGrid() {
           variants={fadeInUp}
         >
           {/* Box border */}
-          <div className="absolute inset-0 border-b border-r border-white/20" />
+          <div className="absolute inset-0 border-b border-white/20" />
+          <Crosshair className="absolute bottom-[-280px] left-0" />
           {/* Content */}
           <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
@@ -345,7 +337,7 @@ function StatsGrid() {
           variants={fadeInUp}
         >
           {/* Box border */}
-          <div className="absolute inset-0 border-b border-r border-white/20" />
+          <div className="absolute inset-0 border-b border-white/20" />
           {/* Content */}
           <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
