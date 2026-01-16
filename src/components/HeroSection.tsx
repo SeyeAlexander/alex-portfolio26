@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { useSounds } from '../hooks/useSounds'
 import { SoundToggle } from './SoundToggle'
 
@@ -24,21 +25,21 @@ export function HeroSection() {
 
         {/* Nav Items positioned in middle grid columns */}
         <nav className="absolute inset-x-0 top-4 md:top-5 flex pointer-events-none">
-          {/* Resume - centered in 2nd column (25%-50%) */}
-          <a
-            href="#resume"
-            onClick={() => playSound('tap')}
-            className="absolute left-[37.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
-          >
-            Resume
-          </a>
-          {/* Me - centered in 3rd column (50%-75%) */}
+          {/* Me - centered in 2nd column (25%-50%) */}
           <a
             href="#me"
             onClick={() => playSound('tap')}
-            className="absolute left-[62.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
+            className="absolute left-[37.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
           >
             Me
+          </a>
+          {/* Resume - centered in 3rd column (50%-75%) */}
+          <a
+            href="#resume"
+            onClick={() => playSound('tap')}
+            className="absolute left-[62.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
+          >
+            Resume
           </a>
           {/* Sound Toggle - in 4th column (75%-100%) */}
           <div className="absolute left-[96.5%] -translate-x-1/2 pointer-events-auto">
@@ -83,10 +84,11 @@ function GridBackground() {
 
       {/* Crosshairs for Line 1 */}
       <Crosshair className="absolute top-[75px] left-[20px]" />
+      <Crosshair className="absolute top-[64%] left-[50%]" />
       <Crosshair className="absolute top-[75px] right-[9px]" />
 
       {/* Lines 2 & 3: Info rectangle */}
-      <div className="absolute bottom-[65px] left-[20px] right-[75%] h-px bg-grid" />
+      <div className="absolute bottom-[75px] left-[20px] right-[75%] h-px bg-grid" />
       <div className="absolute bottom-[20px] left-[20px] right-[75%] h-px bg-grid" />
 
       {/* Crosshairs for rectangle */}
@@ -112,18 +114,85 @@ function Crosshair({ className }: { className?: string }) {
 function Logo() {
   return (
     <div className="font-korium select-none text-xl md:text-2xl leading-5 tracking-wider text-orange hover:text-deep-orange transition-colors duration-300 ease-out font-extrabold">
-      <div>SE</div>
-      <div>YE</div>
+      {/* SE - gets knocked up by YE, wobbles, then settles */}
+      <motion.div
+        initial={{ y: 0, x: 0, rotate: 0 }}
+        animate={{
+          y: [0, -6, -2, -4, -1, 0],
+          x: [0, 3, -2, 1.5, -0.5, 0],
+          rotate: [0, 4, -3, 2, -1, 0],
+        }}
+        transition={{
+          duration: 0.7,
+          delay: 0.9,
+          ease: 'easeOut',
+          times: [0, 0.2, 0.4, 0.6, 0.8, 1],
+        }}
+      >
+        SE
+      </motion.div>
+      {/* YE - rises up to knock SE, wobbles opposite direction */}
+      <motion.div
+        initial={{ y: 8, x: 0, rotate: 0, opacity: 0 }}
+        animate={{
+          y: [8, -2, 1, -0.5, 0],
+          x: [0, -2, 1.5, -0.8, 0],
+          rotate: [0, -3, 2, -1, 0],
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.65,
+          delay: 0.7,
+          ease: 'easeOut',
+          times: [0, 0.25, 0.5, 0.75, 1],
+        }}
+      >
+        YE
+      </motion.div>
     </div>
   )
 }
 
 function NameDisplay() {
+  // Track scroll progress - complete by 30% scroll
+  const { scrollYProgress } = useScroll()
+
+  // Both names use pixel-based transforms that Framer Motion can smoothly interpolate
+  // SEYE: starts 80px left of its natural position, moves right to center
+  // ALEXANDER: starts offset right (200px), animates to 0 (centered)
+  const seyeX = useTransform(scrollYProgress, [0, 0.3], [-200, -200])
+  const alexanderOffset = useTransform(scrollYProgress, [0, 0.3], [200, 100])
+
   return (
     <div className="font-korium select-none text-black tracking-wide">
-      <div className="relative text-5xl md:text-8xl lg:text-[200px] leading-tight font-bold">
-        <p className="-mb-8 lg:-mb-14">SEYE</p>
-        <p style={{ marginLeft: 'calc(4ch + 0.1em)' }}>ALEXANDER</p>
+      <div className="relative text-5xl md:text-8xl lg:text-[200px] leading-tight font-bold flex flex-col items-start">
+        {/* SEYE - fades in from top second, moves RIGHT to center on scroll */}
+        <motion.p
+          className="-mb-8 lg:-mb-14"
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          style={{ x: seyeX }}
+          transition={{
+            duration: 0.6,
+            ease: [0.25, 0.46, 0.45, 0.94] as const,
+            delay: 0.3,
+          }}
+        >
+          SEYE
+        </motion.p>
+        {/* ALEXANDER - fades in from top first, moves LEFT to center on scroll */}
+        <motion.p
+          style={{ x: alexanderOffset }}
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            duration: 0.6,
+            ease: [0.25, 0.46, 0.45, 0.94] as const,
+            delay: 0.1,
+          }}
+        >
+          ALEXANDER
+        </motion.p>
       </div>
     </div>
   )
@@ -131,7 +200,16 @@ function NameDisplay() {
 
 function ShortSummary() {
   return (
-    <div className="font-geist-mono text-xs md:text-sm leading-relaxed text-black/60 max-w-xs">
+    <motion.div
+      className="font-geist-mono text-xs md:text-sm leading-relaxed text-black/60 max-w-xs"
+      initial={{ y: -30, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94] as const,
+        delay: 0.5,
+      }}
+    >
       <p>
         <span className="text-black font-bold">
           Fullstack Developer at EStation
@@ -142,7 +220,7 @@ function ShortSummary() {
         <span className="text-black font-bold">design and engineering</span>.
         Driven by thoughtful design.
       </p>
-    </div>
+    </motion.div>
   )
 }
 

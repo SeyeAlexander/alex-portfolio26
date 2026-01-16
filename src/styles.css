@@ -199,7 +199,7 @@ code {
   --color-sidebar-ring: var(--sidebar-ring);
 
   /* Design system colors for Tailwind */
-  --color-cream: #e5e5dd;
+  --color-cream: #e5e5dd; /* #F5F5F3 */
   --color-black: #000000;
   --color-orange: #ff5500;
   --color-deep-orange: #d84315;

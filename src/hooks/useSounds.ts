@@ -19,6 +19,7 @@ const STORAGE_KEY = 'portfolio-sound-enabled'
 // Global state to share across all hook instances
 let globalEnabled = true
 let globalInitialized = false
+let audioUnlocked = false
 const listeners = new Set<(enabled: boolean) => void>()
 
 // Howl instances for each sound
@@ -38,6 +39,21 @@ const sounds: Record<SoundType, Howl> = {
     volume: VOLUME_MAP.tap,
     preload: true,
   }),
+}
+
+// Unlock audio on first user interaction for instant playback
+function unlockAudio() {
+  if (audioUnlocked) return
+  audioUnlocked = true
+
+  // Play each sound at 0 volume to unlock audio context
+  Object.entries(sounds).forEach(([key, sound]) => {
+    const originalVolume = VOLUME_MAP[key as SoundType]
+    sound.volume(0)
+    sound.play()
+    sound.stop()
+    sound.volume(originalVolume)
+  })
 }
 
 function initializeFromStorage() {
@@ -81,6 +97,9 @@ export function useSounds() {
   }, [])
 
   const playSound = useCallback((type: SoundType) => {
+    // Unlock audio on first interaction
+    unlockAudio()
+
     // Don't play if disabled
     if (!globalEnabled) return
 
@@ -88,7 +107,7 @@ export function useSounds() {
       const sound = sounds[type]
       // Stop any current playback to prevent overlap
       sound.stop()
-      // Play the sound
+      // Play immediately
       sound.play()
     } catch {
       // Silently fail - never block interaction
