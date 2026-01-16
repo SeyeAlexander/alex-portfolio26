@@ -2,32 +2,61 @@
 
 @import 'tw-animate-css';
 
-/* T1-Korium Font - Add your .otf files to src/fonts/t1-korium/ */
+/* T1-Korium Variable Font */
 @font-face {
   font-family: 'T1-Korium';
-  src: url('./fonts/t1-korium/T1-Korium-Regular.otf') format('opentype');
+  src: url('./fonts/t1-korium/T1KoriumVF-BF65f3bd0000a2c.ttf')
+    format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* T1-Korium Static Weights (fallback) */
+@font-face {
+  font-family: 'T1-Korium-Static';
+  src: url('./fonts/t1-korium/T1Korium-2Kg-BF65f3bd011a7a4.otf')
+    format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'T1-Korium-Static';
+  src: url('./fonts/t1-korium/T1Korium-3Kg-BF65f3bd011e12c.otf')
+    format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'T1-Korium-Static';
+  src: url('./fonts/t1-korium/T1Korium-4Kg-BF65f3bd01011b8.otf')
+    format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'T1-Korium';
-  src: url('./fonts/t1-korium/T1-Korium-Bold.otf') format('opentype');
-  font-weight: 700;
+  font-family: 'T1-Korium-Static';
+  src: url('./fonts/t1-korium/T1Korium-5Kg-BF65f3bd0119ac4.otf')
+    format('opentype');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
-/* You can add more weights as needed:
 @font-face {
-  font-family: 'T1-Korium';
-  src: url('./fonts/t1-korium/T1-Korium-Light.otf') format('opentype');
-  font-weight: 300;
+  font-family: 'T1-Korium-Static';
+  src: url('./fonts/t1-korium/T1Korium-6Kg-BF65f3bd00cf9b8.otf')
+    format('opentype');
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
-*/
 
 @custom-variant dark (&:is(.dark *));
 
@@ -47,25 +76,33 @@ code {
 }
 
 :root {
+  /* Design System Colors */
+  --color-cream: #e5e5dd;
+  --color-black: #000000;
+  --color-orange: #ff5500;
+  --color-deep-orange: #d84315;
+  --color-light-orange: #ff8844;
+  --color-grid: #d1d1cb;
+
   --background: #e5e5dd;
-  --foreground: oklch(0.141 0.005 285.823);
+  --foreground: #000000;
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
+  --card-foreground: #000000;
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --popover-foreground: #000000;
+  --primary: #ff5500;
+  --primary-foreground: #ffffff;
+  --secondary: #e5e5dd;
+  --secondary-foreground: #000000;
   --muted: oklch(0.967 0.001 286.375);
   --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
+  --accent: #ff5500;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.871 0.006 286.286);
+  --ring: #ff5500;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -73,54 +110,54 @@ code {
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-foreground: #000000;
+  --sidebar-primary: #ff5500;
+  --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  --sidebar-accent-foreground: #000000;
   --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.871 0.006 286.286);
+  --sidebar-ring: #ff5500;
 
   /* Custom font families */
   --font-geist-mono:
     'GeistMono', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --font-t1-korium: 'T1-Korium', sans-serif;
+  --font-t1-korium: 'T1-Korium', 'T1-Korium-Static', sans-serif;
 }
 
 .dark {
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.141 0.005 285.823);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.141 0.005 285.823);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.21 0.006 285.885);
+  --background: #000000;
+  --foreground: #e5e5dd;
+  --card: #000000;
+  --card-foreground: #e5e5dd;
+  --popover: #000000;
+  --popover-foreground: #e5e5dd;
+  --primary: #ff5500;
+  --primary-foreground: #ffffff;
   --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
+  --secondary-foreground: #e5e5dd;
   --muted: oklch(0.274 0.006 286.033);
   --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground: oklch(0.985 0 0);
+  --accent: #ff5500;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
   --border: oklch(0.274 0.006 286.033);
   --input: oklch(0.274 0.006 286.033);
-  --ring: oklch(0.442 0.017 285.786);
+  --ring: #ff5500;
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar: #000000;
+  --sidebar-foreground: #e5e5dd;
+  --sidebar-primary: #ff5500;
+  --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-accent-foreground: #e5e5dd;
   --sidebar-border: oklch(0.274 0.006 286.033);
-  --sidebar-ring: oklch(0.442 0.017 285.786);
+  --sidebar-ring: #ff5500;
 }
 
 @theme inline {
@@ -161,6 +198,14 @@ code {
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  /* Design system colors for Tailwind */
+  --color-cream: #e5e5dd;
+  --color-black: #000000;
+  --color-orange: #ff5500;
+  --color-deep-orange: #d84315;
+  --color-light-orange: var(--color-light-orange);
+  --color-grid: var(--color-grid);
+
   /* Font families for Tailwind */
   --font-mono: var(--font-geist-mono);
   --font-header: var(--font-t1-korium);
@@ -171,7 +216,7 @@ code {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-[#E5E5DD] text-foreground;
+    @apply bg-cream text-foreground;
   }
 }
 

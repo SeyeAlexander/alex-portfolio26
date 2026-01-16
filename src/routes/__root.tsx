@@ -1,4 +1,9 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import {
+  HeadContent,
+  Scripts,
+  createRootRoute,
+  Link,
+} from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
@@ -15,11 +20,11 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Seye Alexander | Portfolio 2026',
+        title: 'Seye Alexander | Software Engineer',
       },
       {
         name: 'description',
-        content: 'Seye Alexander - Developer Portfolio 2026',
+        content: 'Seye Alexander - Software Engineer',
       },
     ],
     links: [
@@ -44,6 +49,7 @@ export const Route = createRootRoute({
   }),
 
   shellComponent: RootDocument,
+  notFoundComponent: NotFound,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -68,5 +74,29 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
+  )
+}
+
+function NotFound() {
+  return (
+    <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-6">
+      <div className="text-center">
+        <h1
+          className="font-korium text-6xl md:text-8xl text-black mb-4"
+          style={{ fontWeight: 700, lineHeight: 0.9 }}
+        >
+          404
+        </h1>
+        <p className="font-geist-mono text-lg text-black/70 mb-8">
+          Page not found
+        </p>
+        <Link
+          to="/"
+          className="font-geist-mono text-orange hover:text-orange/80 underline underline-offset-4 transition-colors"
+        >
+          Go home
+        </Link>
+      </div>
+    </div>
   )
 }
