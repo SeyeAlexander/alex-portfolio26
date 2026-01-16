@@ -82,7 +82,7 @@ function NotFound() {
     <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-6">
       <div className="text-center">
         <h1
-          className="font-korium text-6xl md:text-8xl text-black mb-4"
+          className="font-korium text-6xl md:text-[200px] text-black mb-4"
           style={{ fontWeight: 700, lineHeight: 0.9 }}
         >
           404
@@ -94,7 +94,7 @@ function NotFound() {
           to="/"
           className="font-geist-mono text-orange hover:text-orange/80 underline underline-offset-4 transition-colors"
         >
-          Go home
+          Back to Alex
         </Link>
       </div>
     </div>
