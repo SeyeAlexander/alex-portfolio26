@@ -12,10 +12,12 @@ const experiences = [
     role: 'Senior Frontend Developer',
     period: 'June 2025 - Present',
     description:
-      'Architecting high-performance applications and building scalable design systems for enterprise clients.',
+      'Leading frontend architecture and team coordination across multiple product initiatives, from terminal-grade POS systems to multi-tenant e-commerce engines.',
     achievements: [
-      'Architected a JSON-driven headless CMS with React, TypeScript, and TanStack Query, introducing a dynamic field-based content system that reduced content management complexity by 70%.',
-      'Led the end-to-end development of Swift Plan Manager and the full redesign of Caraten (40+ pages), re-architecting Next.js navigation with streaming SSR to cut perceived load times by 60%.',
+      'Built a terminal-grade POS and inventory system with real-time stock sync, architecting a desktop-app-like experience in the browser that reduces cashier transaction time by 40% through optimistic UI and offline-first state.',
+      'Engineered a multi-tenant e-commerce engine with dynamic template injection, deploying distinct storefronts from a single codebase — reducing time-to-market for new brands by 80%.',
+      'Architected a JSON-driven headless CMS with React, TypeScript, and TanStack Query, reducing content management complexity by 70% and empowering non-technical teams to structure data independently.',
+      // 'Mentored developers on modern patterns: Suspense boundaries, optimistic UI, authentication flows, and LLM prompt engineering (tokenization, context optimization).',
     ],
   },
   {
@@ -305,7 +307,7 @@ function JobCard({ experience, index }: JobCardProps) {
 
           <div className={`max-w-2xl ${isEven ? 'text-left' : 'text-left'}`}>
             <p
-              className={`font-geist-mono text-xs tracking-widest uppercase mb-2 ${isEven ? 'text-black/60' : 'text-white/60'}`}
+              className={`font-geist-mono text-sm tracking-widest uppercase mb-2 ${isEven ? 'text-black/60' : 'text-white/60'}`}
             >
               {experience.number} {experience.company}
             </p>
@@ -314,7 +316,7 @@ function JobCard({ experience, index }: JobCardProps) {
               {experience.description}
             </p>
 
-            <div className="flex flex-wrap gap-x-6 gap-y-2 font-geist-mono text-sm">
+            <div className="flex flex-wrap gap-x-6 gap-y-2 font-geist-mono text-base">
               <span className="font-bold">{experience.role}</span>
               <span className={isEven ? 'text-black/60' : 'text-white/60'}>
                 {experience.period}
@@ -331,12 +333,12 @@ function JobCard({ experience, index }: JobCardProps) {
           {experience.achievements.map((achievement, i) => (
             <div key={i}>
               <h4
-                className={`font-geist text-sm font-bold mb-2 ${isEven ? 'text-black' : 'text-white'}`}
+                className={`font-geist text-base font-bold mb-2 ${isEven ? 'text-black' : 'text-white'}`}
               >
                 Key Achievement {i + 1}
               </h4>
               <p
-                className={`font-geist-mono text-xs leading-relaxed ${isEven ? 'text-black/70' : 'text-white/70'}`}
+                className={`font-geist-mono text-sm leading-relaxed ${isEven ? 'text-black/70' : 'text-white/70'}`}
               >
                 {achievement}
               </p>

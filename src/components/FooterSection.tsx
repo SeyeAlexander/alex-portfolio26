@@ -1,70 +1,31 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
+import { motion } from 'framer-motion'
 import { useSounds } from '../hooks/useSounds'
 
 export function FooterSection() {
   const [isFlipped1, setIsFlipped1] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
   const { playSound } = useSounds()
 
-  const handleCardClick = () => {
+  const handleCardClick = useCallback(() => {
+    if (isAnimating) return // Prevent multiple clicks during animation
+    setIsAnimating(true)
     playSound('switch')
-    setIsFlipped1(!isFlipped1)
-  }
+    setIsFlipped1((prev) => !prev)
+    // Reset animating state after animation completes
+    setTimeout(() => setIsAnimating(false), 600)
+  }, [isAnimating, playSound])
 
   return (
     <footer className="relative z-10 bg-black text-cream pt-16 pb-10 px-4 md:px-[20px]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 max-w-7xl mx-auto">
         <div className="flex flex-col items-start gap-8">
-          <div
-            className="group relative cursor-pointer"
-            style={{ perspective: '1000px' }}
-            onClick={handleCardClick}
-            title="tap"
-          >
-            {/* Tooltip */}
-            <div className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
-              <span className="bg-cream text-black text-xs font-geist-mono px-2 py-1 rounded">
-                tap
-              </span>
-            </div>
-
-            <div
-              className="relative transition-transform duration-500"
-              style={{
-                transformStyle: 'preserve-3d',
-                transform: isFlipped1 ? 'rotateY(180deg)' : 'rotateY(0deg)',
-              }}
-            >
-              {/* Front - Japanese */}
-              <div
-                className="relative bg-cream/10 border border-cream/20 rounded-md px-12 py-12 md:px-12 md:pt-16 md:pb-4"
-                style={{ backfaceVisibility: 'hidden' }}
-              >
-                <div className="font-korium text-6xl md:text-8xl lg:text-[140px] text-cream font-bold leading-tight tracking-wide">
-                  <p>無</p>
-                  <p style={{ marginLeft: 'calc(1ch + 0.1em)' }}>限</p>
-                </div>
-                <p className="font-geist-mono text-cream/50 text-right text-xs md:text-xs uppercase tracking-[0.3em] mt-14">
-                  Infinity
-                </p>
-              </div>
-
-              {/* Back - Yoruba */}
-              <div
-                className="absolute inset-0 bg-cream/10 border border-cream/20 rounded-md px-12 py-12 md:px-12 md:pt-16 md:pb-4"
-                style={{
-                  backfaceVisibility: 'hidden',
-                  transform: 'rotateY(180deg)',
-                }}
-              >
-                <div className="font-korium text-6xl md:text-8xl lg:text-[140px] text-cream font-bold leading-tight tracking-wide">
-                  <p>Sí</p>
-                  <p style={{ marginLeft: 'calc(1ch + 0.1em)' }}>sẹ́</p>
-                </div>
-                <p className="font-geist-mono text-cream/50 text-right text-xs md:text-xs uppercase tracking-[0.3em] mt-14">
-                  Work hard
-                </p>
-              </div>
-            </div>
+          {/* Mobile: Simple crossfade | Desktop: 3D flip */}
+          <div className="lg:hidden">
+            <MobileFlipCard isFlipped={isFlipped1} onFlip={handleCardClick} />
+          </div>
+          <div className="hidden lg:block">
+            <DesktopFlipCard isFlipped={isFlipped1} onFlip={handleCardClick} />
           </div>
         </div>
 
@@ -109,7 +70,7 @@ export function FooterSection() {
               </svg>
             </a>
             <a
-              href="https://linkedin.com/in/seyealexander"
+              href="https://www.linkedin.com/in/alexander-ojubanire-438284241?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B60EwKTRQRbmH0KmWYkNCIw%3D%3D"
               target="_blank"
               rel="noopener noreferrer"
               className="text-cream/60 hover:text-cream transition-colors"
@@ -135,18 +96,134 @@ export function FooterSection() {
       </div>
 
       {/* Taglines & Copyright */}
-
-      <div className="flex items-center justify-between font-geist-mono px-14 pt-4 text-xs text-cream/30">
-        <p className="transition-opacity duration-300 w-full">
+      <div className="flex flex-col md:flex-row items-center justify-between font-geist-mono px-6 lg:px-14 pt-8 lg:pt-4 text-xs text-cream/30 pb-16 lg:pb-0">
+        <p className="transition-opacity duration-300 lg:w-full">
           {isFlipped1
             ? 'And their language classes'
             : 'Coders love their JJKs and KNYs'}
         </p>
 
-        <p className="text-end w-full">
+        <p className="lg:text-end text-center w-full">
           © 2026 Seye Alexander. All rights reserved.
         </p>
       </div>
     </footer>
+  )
+}
+
+// Mobile: Simple crossfade animation (no 3D)
+function MobileFlipCard({
+  isFlipped,
+  onFlip,
+}: {
+  isFlipped: boolean
+  onFlip: () => void
+}) {
+  return (
+    <div className="relative cursor-pointer select-none" onClick={onFlip}>
+      {/* Front - Japanese */}
+      <motion.div
+        className="bg-cream/10 border border-cream/20 rounded-md px-8 py-10"
+        initial={false}
+        animate={{
+          opacity: isFlipped ? 0 : 1,
+          scale: isFlipped ? 0.95 : 1,
+        }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        style={{ display: isFlipped ? 'none' : 'block' }}
+      >
+        <div className="font-korium text-6xl text-cream font-bold leading-tight tracking-wide">
+          <p>無</p>
+          <p style={{ marginLeft: 'calc(1ch + 0.1em)' }}>限</p>
+        </div>
+        <p className="font-geist-mono text-cream/50 text-right text-xs uppercase tracking-[0.3em] mt-10">
+          Infinity
+        </p>
+      </motion.div>
+
+      {/* Back - Yoruba */}
+      <motion.div
+        className="bg-cream/10 border border-cream/20 rounded-md px-8 py-10"
+        initial={false}
+        animate={{
+          opacity: isFlipped ? 1 : 0,
+          scale: isFlipped ? 1 : 0.95,
+        }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        style={{ display: isFlipped ? 'block' : 'none' }}
+      >
+        <div className="font-korium text-6xl text-cream font-bold leading-tight tracking-wide">
+          <p>Sí</p>
+          <p style={{ marginLeft: 'calc(1ch + 0.1em)' }}>sẹ́</p>
+        </div>
+        <p className="font-geist-mono text-cream/50 text-right text-xs uppercase tracking-[0.3em] mt-10">
+          Work hard
+        </p>
+      </motion.div>
+    </div>
+  )
+}
+
+// Desktop: 3D flip animation (original)
+function DesktopFlipCard({
+  isFlipped,
+  onFlip,
+}: {
+  isFlipped: boolean
+  onFlip: () => void
+}) {
+  return (
+    <div
+      className="group relative cursor-pointer"
+      style={{ perspective: '1000px' }}
+      onClick={onFlip}
+      title="tap"
+    >
+      {/* Tooltip */}
+      <div className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
+        <span className="bg-cream text-black text-xs font-geist-mono px-2 py-1 rounded">
+          tap
+        </span>
+      </div>
+
+      <div
+        className="relative transition-transform duration-500"
+        style={{
+          transformStyle: 'preserve-3d',
+          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+        }}
+      >
+        {/* Front - Japanese */}
+        <div
+          className="relative bg-cream/10 border border-cream/20 rounded-md px-12 py-12 md:px-12 md:pt-16 md:pb-4"
+          style={{ backfaceVisibility: 'hidden' }}
+        >
+          <div className="font-korium text-6xl md:text-8xl lg:text-[140px] text-cream font-bold leading-tight tracking-wide">
+            <p>無</p>
+            <p style={{ marginLeft: 'calc(1ch + 0.1em)' }}>限</p>
+          </div>
+          <p className="font-geist-mono text-cream/50 text-right text-xs md:text-xs uppercase tracking-[0.3em] mt-14">
+            Infinity
+          </p>
+        </div>
+
+        {/* Back - Yoruba */}
+        <div
+          className="absolute inset-0 bg-cream/10 border border-cream/20 rounded-md px-12 py-12 md:px-12 md:pt-16 md:pb-4"
+          style={{
+            backfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)',
+          }}
+        >
+          <div className="font-korium text-6xl md:text-8xl lg:text-[140px] text-cream font-bold leading-tight tracking-wide">
+            <p>Sí</p>
+            <p style={{ marginLeft: 'calc(1ch + 0.1em)' }}>sẹ́</p>
+          </div>
+          <p className="font-geist-mono text-cream/50 text-right text-xs md:text-xs uppercase tracking-[0.3em] mt-14">
+            Work hard
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }

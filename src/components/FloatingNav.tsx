@@ -97,11 +97,77 @@ function NavIcon({ icon }: { icon: string }) {
   }
 }
 
+// Animated audio lines icon for sound toggle
+function AudioLinesIcon({ isPlaying }: { isPlaying: boolean }) {
+  return (
+    <svg
+      className="w-5 h-5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <motion.path
+        d="M2 10v4"
+        animate={
+          isPlaying ? { d: ['M2 10v4', 'M2 8v8', 'M2 10v4'] } : { d: 'M2 10v4' }
+        }
+        transition={isPlaying ? { duration: 0.8, repeat: Infinity } : {}}
+      />
+      <motion.path
+        d="M6 6v12"
+        animate={
+          isPlaying ? { d: ['M6 6v12', 'M6 9v6', 'M6 6v12'] } : { d: 'M6 6v12' }
+        }
+        transition={isPlaying ? { duration: 0.6, repeat: Infinity } : {}}
+      />
+      <motion.path
+        d="M10 3v18"
+        animate={
+          isPlaying
+            ? { d: ['M10 3v18', 'M10 7v10', 'M10 3v18'] }
+            : { d: 'M10 3v18' }
+        }
+        transition={isPlaying ? { duration: 0.7, repeat: Infinity } : {}}
+      />
+      <motion.path
+        d="M14 8v8"
+        animate={
+          isPlaying
+            ? { d: ['M14 8v8', 'M14 5v14', 'M14 8v8'] }
+            : { d: 'M14 8v8' }
+        }
+        transition={isPlaying ? { duration: 0.5, repeat: Infinity } : {}}
+      />
+      <motion.path
+        d="M18 5v14"
+        animate={
+          isPlaying
+            ? { d: ['M18 5v14', 'M18 8v8', 'M18 5v14'] }
+            : { d: 'M18 5v14' }
+        }
+        transition={isPlaying ? { duration: 0.9, repeat: Infinity } : {}}
+      />
+      <motion.path
+        d="M22 10v4"
+        animate={
+          isPlaying
+            ? { d: ['M22 10v4', 'M22 7v10', 'M22 10v4'] }
+            : { d: 'M22 10v4' }
+        }
+        transition={isPlaying ? { duration: 0.6, repeat: Infinity } : {}}
+      />
+    </svg>
+  )
+}
+
 export function FloatingNav() {
   const [isVisible, setIsVisible] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const [ripple, setRipple] = useState<{ id: string; key: number } | null>(null)
-  const { playSound } = useSounds()
+  const { playSound, enabled, toggleSound } = useSounds()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -137,6 +203,11 @@ export function FloatingNav() {
         element.scrollIntoView({ behavior: 'smooth' })
       }
     }
+  }
+
+  const handleSoundToggle = () => {
+    playSound('switch')
+    toggleSound()
   }
 
   return (
@@ -193,6 +264,21 @@ export function FloatingNav() {
                 )}
               </motion.button>
             ))}
+
+            {/* Divider */}
+            <div className="w-px h-6 bg-white/20 mx-1" />
+
+            {/* Sound Toggle */}
+            <motion.button
+              onClick={handleSoundToggle}
+              whileTap={{ scale: 0.85 }}
+              className={`relative p-3 rounded-full transition-colors duration-200 ${
+                enabled ? 'text-orange' : 'text-white/40 hover:text-white/60'
+              }`}
+              title={enabled ? 'Sound On' : 'Sound Off'}
+            >
+              <AudioLinesIcon isPlaying={enabled} />
+            </motion.button>
           </div>
         </motion.nav>
       )}

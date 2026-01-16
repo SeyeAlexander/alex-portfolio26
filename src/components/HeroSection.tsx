@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useSounds } from '../hooks/useSounds'
 import { SoundToggle } from './SoundToggle'
 import { ArrowUpRightIcon } from 'lucide-react'
+// import { WireframeMesh } from './WireframeMesh'
 
 export function HeroSection() {
   const { playSound } = useSounds()
@@ -14,6 +15,9 @@ export function HeroSection() {
     >
       {/* Grid Background - hidden on mobile for cleaner look */}
       <GridBackground />
+
+      {/* Topographical Wireframe Mesh - Desktop only */}
+      {/* <WireframeMesh className="hidden md:block inset-0 z-0" /> */}
 
       {/* Header containing Logo and Nav */}
       <header className="relative z-10 pt-4 px-4 md:pt-5 md:px-[20px] flex items-center justify-between">
@@ -32,14 +36,14 @@ export function HeroSection() {
           <a
             href="#me"
             onClick={() => playSound('tap')}
-            className="font-korium text-base font-medium tracking-wider text-black"
+            className="font-korium text-lg font-medium tracking-wider text-black"
           >
             About
           </a>
           <a
             href="#resume"
             onClick={() => playSound('tap')}
-            className="font-korium text-base font-medium tracking-wider text-black"
+            className="font-korium text-lg font-medium tracking-wider text-black"
           >
             Resume
           </a>
@@ -69,9 +73,9 @@ export function HeroSection() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 relative z-10 flex flex-col justify-center px-6 md:px-0 md:pt-64">
+      <main className="flex-1 relative z-10 flex flex-col justify-center px-6 md:px-0 pt-20 md:pt-64">
         {/* Name Display */}
-        <div className="flex items-center justify-center py-16 md:py-0">
+        <div className="flex items-center justify-center md:py-0">
           <NameDisplay />
         </div>
 
@@ -185,7 +189,7 @@ function NameDisplay() {
 
   return (
     <div className="font-korium select-none text-black tracking-wide">
-      <div className="relative text-7xl md:text-8xl lg:text-[200px] leading-tight font-bold flex flex-col items-center md:items-start">
+      <div className="relative text-[76px]  md:text-8xl lg:text-[200px] leading-tight font-bold flex flex-col items-center md:items-start">
         {/* SEYE */}
         <motion.p
           className="-mb-4 md:-mb-8 lg:-mb-14"
@@ -231,7 +235,7 @@ function NameDisplay() {
 function ShortSummary() {
   return (
     <motion.div
-      className="font-geist-mono text-xs md:text-sm leading-relaxed text-black/60 max-w-xs text-center md:text-left mx-auto md:mx-0"
+      className="font-geist-mono text-sm md:text-sm leading-relaxed text-black/60 max-w-xs text-center md:text-left mx-auto md:mx-0"
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{

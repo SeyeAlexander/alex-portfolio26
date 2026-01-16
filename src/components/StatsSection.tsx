@@ -30,7 +30,7 @@ const personalDetails = [
   { label: 'LOCATION', value: 'LAGOS, NIGERIA' },
   { label: 'FIELD', value: 'DESIGN & DEVELOPMENT' },
   { label: 'APPROACH', value: 'LESS BUT BETTER' },
-  { label: 'CAREER', value: 'STARTUPS & AGENCIES' },
+  { label: 'CAREER', value: 'HIGH IMPACT TEAMS' },
 ]
 
 // Stats data
@@ -69,7 +69,7 @@ function useCountUp(end: number, duration: number = 1500, delay: number = 0) {
   const [count, setCount] = useState(0)
   const [triggerCount, setTriggerCount] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: false, margin: '-100px' })
+  const isInView = useInView(ref, { once: false, margin: '-20px' })
   const hasInitialAnimated = useRef(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -231,12 +231,11 @@ function PersonalDetailsBar() {
                   ? 'calc(20px - 1.5rem)'
                   : 0,
             }}
-            variants={fadeInUp}
           >
-            <p className="font-geist-mono text-[10px] md:text-xs text-white/50 tracking-widest mb-1">
+            <p className="font-geist-mono text-xs md:text-xs text-white/50 tracking-widest mb-1">
               {detail.label}
             </p>
-            <p className="font-geist-mono text-xs md:text-sm text-white tracking-wide">
+            <p className="font-geist-mono text-sm md:text-sm text-white tracking-wide">
               {detail.value}
             </p>
           </motion.div>
@@ -253,7 +252,7 @@ function MobileStatsGrid() {
       className="md:hidden px-4 py-8"
       initial="hidden"
       whileInView="visible"
-      viewport={{ margin: '-50px' }}
+      viewport={{ once: false, margin: '0px' }}
       variants={staggerContainer}
     >
       <div className="grid grid-cols-2 gap-6">
@@ -269,17 +268,17 @@ function MobileStatsGrid() {
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
             </div>
-            <p className="font-geist text-4xl font-bold leading-none">
+            <p className="font-geist text-5xl font-bold leading-none">
               <AnimatedNumber
                 value={stat.number}
                 suffix={stat.suffix}
                 staggerIndex={index}
               />
             </p>
-            <p className="font-geist-mono text-[10px] text-white tracking-widest mt-3 mb-2">
+            <p className="font-geist-mono text-sm text-white tracking-widest mt-3 mb-2">
               {stat.label}
             </p>
-            <p className="font-geist-mono text-[10px] text-white/50 tracking-wide leading-relaxed">
+            <p className="font-geist-mono text-sm text-white/50 tracking-wide leading-relaxed">
               {stat.description}
             </p>
           </motion.div>
