@@ -66,4 +66,4 @@ This portfolio follows a **"less but better"** approach:
 
 ---
 
-**Built with ☕ and intention in ~36 hours**
+**Built with ☕ and intention in ~30 hours**

@@ -189,7 +189,7 @@ function NameDisplay() {
 
   return (
     <div className="font-korium select-none text-black tracking-wide">
-      <div className="relative text-[76px]  md:text-8xl lg:text-[200px] leading-tight font-bold flex flex-col items-center md:items-start">
+      <div className="relative text-[76px]  md:text-7xl lg:text-[180px] xl:text-[200px] leading-tight font-bold flex flex-col items-center md:items-start">
         {/* SEYE */}
         <motion.p
           className="-mb-4 md:-mb-8 lg:-mb-14"

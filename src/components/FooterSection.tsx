@@ -199,11 +199,11 @@ function DesktopFlipCard({
           style={{ backfaceVisibility: 'hidden' }}
         >
           <div className="font-korium text-6xl md:text-8xl lg:text-[140px] text-cream font-bold leading-tight tracking-wide">
-            <p>無</p>
-            <p style={{ marginLeft: 'calc(1ch + 0.1em)' }}>限</p>
+            <p>努</p>
+            <p style={{ marginLeft: 'calc(1ch + 0.1em)' }}>力</p>
           </div>
           <p className="font-geist-mono text-cream/50 text-right text-xs md:text-xs uppercase tracking-[0.3em] mt-14">
-            Infinity
+            Doryoku
           </p>
         </div>
 

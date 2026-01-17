@@ -27,7 +27,7 @@ const experiences = [
     role: 'Lead Frontend Engineer',
     period: 'July 2024 - May 2025',
     description:
-      'Led frontend development of enterprise applications, architecting core systems for seamless content workflows.',
+      'Engineered frontend infrastructure for enterprise applications, designing core systems for seamless content workflows.',
     achievements: [
       'Led the frontend development of Flozi, architecting a data-mapping system that synchronized Notion databases with Webflow CMS.',
       'Contributed to backend development: models, controllers, third-party API integrations for Notion, Webflow, and email services.',
@@ -41,7 +41,7 @@ const experiences = [
     role: 'Full Stack Engineer',
     period: 'April 2023 - July 2024',
     description:
-      'Architected frontend development integrating blockchain and building developer tools for the freelance platform.',
+      'Built the frontend for a blockchain-enabled freelance platform, developing internal developer tools to support platform scalability.',
     achievements: [
       'Architected the frontend of Layers, a freelance platform, integrating blockchain wallet authentication using Polygon.',
       'Developed a custom Figma plugin for automated asset transfers, reducing manual user effort and upload complexity.',

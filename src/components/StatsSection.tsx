@@ -222,7 +222,7 @@ function PersonalDetailsBar() {
         {personalDetails.map((detail, index) => (
           <motion.div
             key={detail.label}
-            className="md:px-8"
+            className={`md:px-8 ${index === 0 ? 'md:pl-12' : ''}`}
             style={{
               marginLeft:
                 index === 0 &&
@@ -302,7 +302,7 @@ function DesktopStatsGrid() {
       <div className="relative">
         {/* Stat Box 1 - Column 1 */}
         <motion.div
-          className="absolute left-[20px] w-[calc(25%-20px)] aspect-square"
+          className="absolute left-[20px] w-[calc(25%-20px)] h-[23vw]"
           variants={fadeInUp}
         >
           <div className="absolute inset-0 border-b border-white/20" />
@@ -331,7 +331,7 @@ function DesktopStatsGrid() {
 
         {/* Stat Box 2 - Column 3 */}
         <motion.div
-          className="absolute left-1/2 w-1/4 aspect-square"
+          className="absolute left-1/2 w-1/4 h-[23vw]"
           variants={fadeInUp}
         >
           <div className="absolute inset-0 border-b border-white/20" />
@@ -359,14 +359,14 @@ function DesktopStatsGrid() {
           </div>
         </motion.div>
 
-        <div className="w-1/4 aspect-square" />
+        <div className="w-1/4 h-[23vw]" />
       </div>
 
       {/* Row 2: Stats 2 (col 2) and Stats 3 (col 4) */}
-      <div className="relative -mt-[10%]">
+      <div className="relative -mt-[8%]">
         {/* Stat Box 3 - Column 2 */}
         <motion.div
-          className="absolute left-1/4 w-1/4 aspect-[1/1.15]"
+          className="absolute left-1/4 w-1/4 h-[28.75vw]"
           variants={fadeInUp}
         >
           <div className="absolute inset-0 border-b border-white/20" />
@@ -395,7 +395,7 @@ function DesktopStatsGrid() {
 
         {/* Stat Box 4 - Column 4 */}
         <motion.div
-          className="absolute left-3/4 w-[calc(25%-20px)] aspect-[1/1.15]"
+          className="absolute left-3/4 w-[calc(25%-20px)] h-[28.75vw]"
           variants={fadeInUp}
         >
           <div className="absolute inset-0 border-b border-white/20" />
@@ -422,7 +422,7 @@ function DesktopStatsGrid() {
           </div>
         </motion.div>
 
-        <div className="w-1/4 aspect-[1/1.15] ml-1/4" />
+        <div className="w-1/4 h-[28.75vw] ml-1/4" />
       </div>
 
       <div className="h-16" />
