@@ -17,11 +17,11 @@ export function HeroSection() {
       <GridBackground />
 
       {/* Topographical Wireframe Mesh - Desktop only */}
-      {/* <WireframeMesh className="hidden md:block inset-0 z-0" /> */}
+      {/* <WireframeMesh className="hidden lg:block inset-0 z-0" /> */}
 
       {/* Header containing Logo and Nav */}
-      <header className="relative z-10 pt-4 px-4 md:pt-5 md:px-[20px] flex items-center justify-between">
-        <div className="md:pl-4 md:w-1/4">
+      <header className="relative z-10 pt-4 px-4 lg:pt-5 lg:px-[20px] flex items-center justify-between">
+        <div className="lg:pl-4 lg:w-1/4">
           <Link
             to="/"
             className="inline-block"
@@ -32,13 +32,13 @@ export function HeroSection() {
         </div>
 
         {/* Mobile: Simple row layout | Desktop: Absolute positioned */}
-        <div className="flex items-center gap-4 md:hidden">
+        <div className="flex items-center gap-4 lg:hidden">
           <a
             href="#me"
             onClick={() => playSound('tap')}
             className="font-korium text-lg font-medium tracking-wider text-black"
           >
-            About
+            About Me
           </a>
           <a
             href="#resume"
@@ -51,18 +51,18 @@ export function HeroSection() {
         </div>
 
         {/* Desktop Nav - hidden on mobile */}
-        <nav className="hidden md:flex absolute inset-x-0 top-5 pointer-events-none">
+        <nav className="hidden lg:flex absolute inset-x-0 top-5 pointer-events-none">
           <a
             href="#me"
             onClick={() => playSound('tap')}
-            className="absolute left-[37.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
+            className="absolute left-[37.5%] -translate-x-1/2 font-korium text-xl lg:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
           >
             About Me
           </a>
           <a
             href="#resume"
             onClick={() => playSound('tap')}
-            className="absolute left-[62.5%] -translate-x-1/2 font-korium text-xl md:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
+            className="absolute left-[62.5%] -translate-x-1/2 font-korium text-xl lg:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
           >
             Resume
           </a>
@@ -73,26 +73,26 @@ export function HeroSection() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 relative z-10 flex flex-col justify-center px-6 md:px-0 pt-20 md:pt-64">
+      <main className="flex-1 relative z-10 flex flex-col justify-center px-6 lg:px-0 pt-20 md:pt-64">
         {/* Name Display */}
-        <div className="flex items-center justify-center md:py-0">
+        <div className="flex items-center justify-center lg:py-0">
           <NameDisplay />
         </div>
 
         {/* Professional Summary - Below name on mobile, absolute on desktop */}
-        <div className="md:absolute md:top-[51%] md:right-3 md:pl-4 md:w-1/4 mt-8 md:mt-0 px-4 md:px-0">
+        <div className="lg:absolute lg:top-[51%] lg:right-3 lg:pl-4 lg:w-1/4 mt-8 lg:mt-0 px-4 lg:px-0">
           <ShortSummary />
         </div>
 
         {/* Button - Full width on mobile, positioned on desktop */}
-        <div className="mt-8 md:mt-0 px-4 md:px-0 md:absolute md:bottom-[20px] md:h-14 md:left-[20px] md:right-[75%] z-20">
-          <div className="h-14">
+        <div className="mt-8 lg:mt-0 px-4 lg:px-0 lg:absolute lg:bottom-[20px] h-14 md:h-[70px] lg:h-14 lg:left-[20px] lg:right-[75%] z-20">
+          <div className="h-14 md:h-[70px] lg:h-14">
             <ResumeButton />
           </div>
         </div>
 
         {/* Bottom spacing on mobile */}
-        <div className="h-8 md:hidden" />
+        <div className="h-8 lg:hidden" />
       </main>
     </section>
   )
@@ -100,7 +100,7 @@ export function HeroSection() {
 
 function GridBackground() {
   return (
-    <div className="absolute inset-0 pointer-events-none select-none hidden md:block">
+    <div className="absolute inset-0 pointer-events-none select-none hidden lg:block">
       {/* Vertical Lines */}
       <div className="absolute left-[20px] inset-y-0 w-px bg-grid" />
       <div className="absolute left-1/4 inset-y-0 w-px bg-grid" />
@@ -142,7 +142,7 @@ function Crosshair({ className }: { className?: string }) {
 
 function Logo() {
   return (
-    <div className="font-korium select-none text-xl md:text-2xl leading-5 tracking-wider text-orange hover:text-deep-orange transition-colors duration-300 ease-out font-extrabold">
+    <div className="font-korium select-none text-xl lg:text-2xl leading-5 tracking-wider text-orange hover:text-deep-orange transition-colors duration-300 ease-out font-extrabold">
       <motion.div
         initial={{ y: 0, x: 0, rotate: 0 }}
         animate={{
@@ -189,7 +189,7 @@ function NameDisplay() {
 
   return (
     <div className="font-korium select-none text-black tracking-wide">
-      <div className="relative text-[76px]  md:text-7xl lg:text-[180px] xl:text-[200px] leading-tight font-bold flex flex-col items-center md:items-start">
+      <div className="relative text-[82px] md:text-9xl lg:text-[180px] xl:text-[200px] md:-ml-36 lg:ml-0 leading-tight font-bold flex flex-col items-center lg:items-start">
         {/* SEYE */}
         <motion.p
           className="-mb-4 md:-mb-8 lg:-mb-14"
@@ -235,7 +235,7 @@ function NameDisplay() {
 function ShortSummary() {
   return (
     <motion.div
-      className="font-geist-mono text-sm md:text-sm leading-relaxed text-black/60 max-w-xs text-center md:text-left mx-auto md:mx-0"
+      className="font-geist-mono text-sm md:text-base lg:text-sm leading-relaxed text-black/60 max-w-xs text-center lg:text-left mx-auto lg:mx-0"
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{

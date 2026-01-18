@@ -7,12 +7,14 @@ import { ProjectsSection } from '../components/ProjectsSection'
 import { FooterSpacer } from '../components/FooterSpacer'
 import { FooterSection } from '../components/FooterSection'
 import { FloatingNav } from '../components/FloatingNav'
+import { SiteLoader } from '../components/SiteLoader'
 
 export const Route = createFileRoute('/')({ component: HomePage })
 
 function HomePage() {
   return (
-    <div className="bg-cream">
+    <div className="bg-black">
+      <SiteLoader />
       <HeroSection />
       <StatsSection />
       <AboutSection />
