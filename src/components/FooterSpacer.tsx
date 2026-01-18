@@ -13,8 +13,8 @@ export function FooterSpacer() {
     <div className="relative z-10 bg-cream py-10 md:py-12 overflow-hidden">
       <div className="flex flex-col items-center justify-center gap-2">
         <p className="font-geist-mono text-xs md:text-sm text-black/50 tracking-wide text-center max-w-4xl">
-          Tanstack Start, Framer Motion, Tailwind CSS. Designed, built, and
-          refined with intent in ~36 hours.
+          Tanstack Start, Framer Motion, Tailwind CSS. Built, and refined with
+          intent in ~36 hours.
         </p>
 
         <p className="font-geist-mono text-xs md:text-sm text-black/50 tracking-widest text-center">

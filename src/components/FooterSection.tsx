@@ -49,11 +49,11 @@ export function FooterSection() {
               Get me on your next top project
             </p>
             <a
-              href="mailto:ojubanirealex@gmail.com"
+              href="mailto:hello@seyealexander.dev"
               onClick={() => playSound('tap')}
               className="font-geist-mono text-orange hover:text-orange/80 text-sm md:text-base transition-colors"
             >
-              ojubanirealex@gmail.com
+              hello@seyealexander.dev
             </a>
           </div>
 
@@ -133,11 +133,11 @@ function MobileFlipCard({
         style={{ display: isFlipped ? 'none' : 'block' }}
       >
         <div className="font-korium text-6xl text-cream font-bold leading-tight tracking-wide">
-          <p>無</p>
-          <p style={{ marginLeft: 'calc(1ch + 0.1em)' }}>限</p>
+          <p>努</p>
+          <p style={{ marginLeft: 'calc(1ch + 0.1em)' }}>力</p>
         </div>
         <p className="font-geist-mono text-cream/50 text-right text-xs uppercase tracking-[0.3em] mt-10">
-          Infinity
+          Doryoku
         </p>
       </motion.div>
 

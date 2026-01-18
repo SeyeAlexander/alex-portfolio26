@@ -27,7 +27,7 @@ const staggerContainer = {
 
 // Personal details data
 const personalDetails = [
-  { label: 'LOCATION', value: 'LAGOS, NIGERIA' },
+  { label: 'CODING GLOBALLY FROM', value: 'LAGOS, NIGERIA' },
   { label: 'FIELD', value: 'DESIGN & DEVELOPMENT' },
   { label: 'APPROACH', value: 'LESS BUT BETTER' },
   { label: 'CAREER', value: 'HIGH IMPACT TEAMS' },
@@ -175,7 +175,7 @@ export function StatsSection() {
 
 function GridBackground() {
   return (
-    <div className="absolute inset-0 pointer-events-none select-none hidden md:block">
+    <div className="absolute inset-0 pointer-events-none select-none hidden lg:block">
       <div className="absolute left-[20px] inset-y-0 w-px bg-white/20" />
       <div className="absolute left-1/4 inset-y-0 w-px bg-white/20" />
       <div className="absolute left-1/2 inset-y-0 w-px bg-white/20" />
@@ -206,10 +206,10 @@ function PersonalDetailsBar() {
       variants={staggerContainer}
     >
       {/* Bottom horizontal line */}
-      <div className="absolute bottom-0 left-4 right-4 md:left-[20px] md:right-[20px] h-px bg-white/20" />
+      <div className="absolute bottom-0 left-4 right-4 lg:left-[20px] lg:right-[20px] h-px bg-white/20" />
 
       {/* Crosshairs - hidden on mobile */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <Crosshair className="absolute bottom-[-10px] left-[20px]" />
         <Crosshair className="absolute bottom-[-10px] left-1/4" />
         <Crosshair className="absolute bottom-[-10px] left-1/2" />
@@ -218,11 +218,11 @@ function PersonalDetailsBar() {
       </div>
 
       {/* Content Grid - 2 cols on mobile, 4 cols on desktop */}
-      <div className="relative grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0 py-6 md:py-8 px-4 md:px-0">
+      <div className="relative grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-0 py-6 lg:py-8 px-4 lg:px-0">
         {personalDetails.map((detail, index) => (
           <motion.div
             key={detail.label}
-            className={`md:px-8 ${index === 0 ? 'md:pl-12' : ''}`}
+            className={`lg:px-8 ${index === 0 ? 'lg:pl-12' : ''}`}
             style={{
               marginLeft:
                 index === 0 &&
@@ -232,10 +232,10 @@ function PersonalDetailsBar() {
                   : 0,
             }}
           >
-            <p className="font-geist-mono text-xs md:text-xs text-white/50 tracking-widest mb-1">
+            <p className="font-geist-mono text-xs lg:text-xs text-white/50 tracking-widest mb-1">
               {detail.label}
             </p>
-            <p className="font-geist-mono text-sm md:text-sm text-white tracking-wide">
+            <p className="font-geist-mono text-sm lg:text-sm text-white tracking-wide">
               {detail.value}
             </p>
           </motion.div>
@@ -249,7 +249,7 @@ function PersonalDetailsBar() {
 function MobileStatsGrid() {
   return (
     <motion.div
-      className="md:hidden px-4 py-8"
+      className="lg:hidden px-4 py-8"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, margin: '0px' }}
@@ -292,7 +292,7 @@ function MobileStatsGrid() {
 function DesktopStatsGrid() {
   return (
     <motion.div
-      className="relative hidden md:block"
+      className="relative hidden lg:block"
       initial="hidden"
       whileInView="visible"
       viewport={{ margin: '-100px' }}
@@ -306,24 +306,25 @@ function DesktopStatsGrid() {
           variants={fadeInUp}
         >
           <div className="absolute inset-0 border-b border-white/20" />
-          <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
+          <div className="relative p-6 lg:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
             </div>
-            <p className="font-geist text-6xl md:text-8xl lg:text-[120px] font-bold leading-none -ml-1">
+            {/* lg:text-8xl */}
+            <p className="font-geist text-6xl  lg:text-[120px] font-bold leading-none -ml-1">
               <AnimatedNumber
                 value={stats[0].number}
                 suffix={stats[0].suffix}
                 staggerIndex={0}
               />
             </p>
-            <p className="font-geist-mono text-[10px] md:text-xs text-white tracking-widest mt-4 mb-2">
+            <p className="font-geist-mono text-[10px] lg:text-xs text-white tracking-widest mt-4 mb-2">
               {stats[0].label}
             </p>
-            <p className="font-geist-mono text-[10px] md:text-xs text-white/50 tracking-wide leading-relaxed max-w-[200px]">
+            <p className="font-geist-mono text-[10px] lg:text-xs text-white/50 tracking-wide leading-relaxed max-w-[200px]">
               {stats[0].description}
             </p>
           </div>
@@ -336,24 +337,25 @@ function DesktopStatsGrid() {
         >
           <div className="absolute inset-0 border-b border-white/20" />
           <Crosshair className="absolute bottom-[-280px] left-0" />
-          <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
+          <div className="relative p-6 lg:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
             </div>
-            <p className="font-geist text-6xl md:text-8xl lg:text-[120px] font-bold leading-none -ml-1">
+            {/* md:text-8xl */}
+            <p className="font-geist text-6xl  lg:text-[120px] font-bold leading-none -ml-1">
               <AnimatedNumber
                 value={stats[1].number}
                 suffix={stats[1].suffix}
                 staggerIndex={1}
               />
             </p>
-            <p className="font-geist-mono text-[10px] md:text-xs text-white tracking-widest mt-4 mb-2">
+            <p className="font-geist-mono text-[10px] lg:text-xs text-white tracking-widest mt-4 mb-2">
               {stats[1].label}
             </p>
-            <p className="font-geist-mono text-[10px] md:text-xs text-white/50 tracking-wide leading-relaxed max-w-[200px]">
+            <p className="font-geist-mono text-[10px] lg:text-xs text-white/50 tracking-wide leading-relaxed max-w-[200px]">
               {stats[1].description}
             </p>
           </div>
@@ -370,24 +372,25 @@ function DesktopStatsGrid() {
           variants={fadeInUp}
         >
           <div className="absolute inset-0 border-b border-white/20" />
-          <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
+          <div className="relative p-6 lg:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
             </div>
-            <p className="font-geist text-6xl md:text-8xl lg:text-[120px] font-bold leading-none -ml-1">
+            {/* md:text-8xl */}
+            <p className="font-geist text-6xl lg:text-[120px] font-bold leading-none -ml-1">
               <AnimatedNumber
                 value={stats[2].number}
                 suffix={stats[2].suffix}
                 staggerIndex={2}
               />
             </p>
-            <p className="font-geist-mono text-[10px] md:text-xs text-white tracking-widest mt-4 mb-2">
+            <p className="font-geist-mono text-[10px] lg:text-xs text-white tracking-widest mt-4 mb-2">
               {stats[2].label}
             </p>
-            <p className="font-geist-mono text-[10px] md:text-xs text-white/50 tracking-wide leading-relaxed max-w-[200px]">
+            <p className="font-geist-mono text-[10px] lg:text-xs text-white/50 tracking-wide leading-relaxed max-w-[200px]">
               {stats[2].description}
             </p>
           </div>
@@ -399,24 +402,24 @@ function DesktopStatsGrid() {
           variants={fadeInUp}
         >
           <div className="absolute inset-0 border-b border-white/20" />
-          <div className="relative p-6 md:p-8 h-full flex flex-col justify-end">
+          <div className="relative p-6 lg:p-8 h-full flex flex-col justify-end">
             <div className="flex gap-1 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
             </div>
-            <p className="font-geist text-6xl md:text-8xl lg:text-[120px] font-bold leading-none -ml-1">
+            <p className="font-geist text-6xl lg:text-[120px] font-bold leading-none -ml-1">
               <AnimatedNumber
                 value={stats[3].number}
                 suffix={stats[3].suffix}
                 staggerIndex={3}
               />
             </p>
-            <p className="font-geist-mono text-[10px] md:text-xs text-white tracking-widest mt-4 mb-2">
+            <p className="font-geist-mono text-[10px] lg:text-xs text-white tracking-widest mt-4 mb-2">
               {stats[3].label}
             </p>
-            <p className="font-geist-mono text-[10px] md:text-xs text-white/50 tracking-wide leading-relaxed max-w-[200px]">
+            <p className="font-geist-mono text-[10px] lg:text-xs text-white/50 tracking-wide leading-relaxed max-w-[200px]">
               {stats[3].description}
             </p>
           </div>
