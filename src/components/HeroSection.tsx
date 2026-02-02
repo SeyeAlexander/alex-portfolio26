@@ -91,6 +91,11 @@ export function HeroSection() {
           </div>
         </div>
 
+        {/* TextFlow Teaser - Desktop Only */}
+        <div className="hidden lg:block absolute top-[120px] right-[8%] z-20">
+          <TextFlowTeaser />
+        </div>
+
         {/* Bottom spacing on mobile */}
         <div className="h-8 lg:hidden" />
       </main>
@@ -274,6 +279,72 @@ function ResumeButton() {
       </p>
 
       <ArrowUpRightIcon className="w-5 h-5 transition-transform duration-300 ease-out group-hover:translate-x-2 group-hover:-translate-y-1" />
+    </a>
+  )
+}
+
+function TextFlowTeaser() {
+  const { playSound } = useSounds()
+
+  return (
+    <a
+      href="#projects"
+      onClick={() => playSound('tap')}
+      className="group block relative pl-8 pb-4"
+    >
+      {/* Decorative vertical line */}
+      <motion.div
+        initial={{ height: 0 }}
+        animate={{ height: '100%' }}
+        transition={{ duration: 0.8, delay: 1 }}
+        className="absolute left-0 top-0 w-px bg-black/20 group-hover:bg-orange transition-colors"
+      />
+
+      {/* Decorative tiny box */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="absolute left-[-2px] top-0 w-1.5 h-1.5 bg-black"
+      />
+
+      <div className="space-y-1">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1.3 }}
+          className="flex items-center gap-3"
+        >
+          <span className="font-geist-mono text-[10px] text-orange tracking-[0.2em] uppercase">
+            Latest_Build detected
+          </span>
+          <span className="w-2 h-2 rounded-full bg-orange animate-pulse" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1.4 }}
+        >
+          <h4 className="font-korium text-4xl text-black group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r group-hover:from-orange group-hover:to-deep-orange transition-all duration-300">
+            TEXTFLOW
+          </h4>
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="font-geist-mono text-xs text-black/50 group-hover:text-black/80 transition-colors"
+        >
+          Collab Editor // v1.0
+        </motion.p>
+      </div>
+
+      {/* Hover Arrow */}
+      <div className="absolute right-[-40px] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-[-10px] transition-all duration-300 text-orange">
+        →
+      </div>
     </a>
   )
 }
