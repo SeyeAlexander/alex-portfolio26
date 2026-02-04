@@ -16,13 +16,20 @@ const fadeInUp = {
 }
 
 const screenshots = [
-  '/Screenshot 2026-02-02 at 00.50.05.png',
-  '/Screenshot 2026-02-02 at 00.50.23.png',
-  '/Screenshot 2026-02-02 at 00.50.40.png',
-  '/Screenshot 2026-02-02 at 00.50.46.png',
-  '/Screenshot 2026-02-02 at 00.50.54.png',
-  '/Screenshot 2026-02-02 at 00.51.53.png',
-  '/Screenshot 2026-02-02 at 00.52.11.png',
+  '/Screenshot 2026-02-04 at 01.51.44.png',
+  '/Screenshot 2026-02-04 at 01.51.51.png',
+  '/Screenshot 2026-02-04 at 01.52.13.png',
+  '/Screenshot 2026-02-04 at 01.52.32.png',
+  '/Screenshot 2026-02-04 at 01.52.50.png',
+  '/Screenshot 2026-02-04 at 01.52.55.png',
+  '/Screenshot 2026-02-04 at 01.53.04.png',
+  '/Screenshot 2026-02-04 at 01.53.14.png',
+  '/Screenshot 2026-02-04 at 01.53.22.png',
+  '/Screenshot 2026-02-04 at 01.57.56.png',
+  '/Screenshot 2026-02-04 at 01.58.07.png',
+  '/Screenshot 2026-02-04 at 01.58.13.png',
+  '/Screenshot 2026-02-04 at 01.58.21.png',
+  '/Screenshot 2026-02-04 at 01.58.29.png',
 ]
 
 export function ProjectsSection() {
@@ -122,21 +129,13 @@ export function ProjectsSection() {
 
             {/* Content */}
             <div className="p-8 md:p-12 lg:p-16 relative z-20">
-              {/* Top row: Status + Progress */}
+              {/* Top row: Status */}
               <div className="flex items-start justify-between mb-8">
                 <div className="flex items-center gap-3">
-                  <span className="inline-block w-2 h-2 rounded-full bg-orange animate-pulse" />
-                  <span className="font-geist-mono text-xs text-orange uppercase tracking-widest">
-                    In Development
+                  <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
+                  <span className="font-geist-mono text-xs text-green-500 uppercase tracking-widest">
+                    Live
                   </span>
-                </div>
-                <div className="text-right">
-                  <span className="font-geist-mono text-4xl md:text-5xl font-bold text-deep-orange">
-                    80%
-                  </span>
-                  <p className="font-geist-mono text-xs text-white/50 mt-1">
-                    COMPLETE
-                  </p>
                 </div>
               </div>
 
