@@ -97,6 +97,10 @@ export const Route = createRootRoute({
       },
       {
         rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+      },
+      {
+        rel: 'stylesheet',
         href: appCss,
       },
       // Canonical link
@@ -150,6 +154,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('clean-theme');if(!t){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}if(t==='dark'){document.documentElement.classList.add('dark');document.documentElement.setAttribute('data-clean-theme','dark')}else if(t==='sunny'){document.documentElement.classList.remove('dark');document.documentElement.setAttribute('data-clean-theme','sunny')}else{document.documentElement.classList.remove('dark');document.documentElement.setAttribute('data-clean-theme','light')}}catch(e){}})()`,
+          }}
+        />
       </head>
       <body>
         {children}
