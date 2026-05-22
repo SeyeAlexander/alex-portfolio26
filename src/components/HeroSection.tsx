@@ -251,9 +251,9 @@ function ShortSummary() {
     >
       <p>
         <span className="text-black font-bold">
-          Fullstack Developer at EStation
+          Senior Frontend Engineer at Layers AI
         </span>{' '}
-        architecting high-performance apps. I build{' '}
+        shipping App Machina end-to-end. I build{' '}
         <span className="text-black font-bold">collaborative tools</span> at the
         intersection of{' '}
         <span className="text-black font-bold">design and engineering</span>.

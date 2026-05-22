@@ -7,59 +7,81 @@ import { motion } from 'framer-motion'
 const experiences = [
   {
     number: '01',
-    company: 'EStation',
-    location: 'Lagos, Nigeria (Remote)',
-    role: 'Senior Frontend Developer',
-    period: 'June 2025 - Present',
+    company: 'Layers AI Inc',
+    location: 'Los Angeles, California (Remote)',
+    role: 'Senior Frontend Engineer',
+    period: 'April 2026 - Present',
     description:
-      'Leading frontend architecture and team coordination across multiple product initiatives, from terminal-grade POS systems to multi-tenant e-commerce engines.',
+      'Designing and shipping App Machina end-to-end, positioning it as the first Mobile Measurement Agent (MMA) — distinct from legacy mobile measurement platforms.',
     achievements: [
-      'Built a terminal-grade POS and inventory system with real-time stock sync, architecting a desktop-app-like experience in the browser that reduces cashier transaction time by 40% through optimistic UI and offline-first state.',
-      'Engineered a multi-tenant e-commerce engine with dynamic template injection, deploying distinct storefronts from a single codebase — reducing time-to-market for new brands by 80%.',
-      'Architected a JSON-driven headless CMS with React, TypeScript, and TanStack Query, reducing content management complexity by 70% and empowering non-technical teams to structure data independently.',
-      // 'Mentored developers on modern patterns: Suspense boundaries, optimistic UI, authentication flows, and LLM prompt engineering (tokenization, context optimization).',
+      'Built the full marketing site and a seven-surface authenticated dashboard — attribution funnels, campaigns workbench, audience cohorts — using React 19, TanStack Router, Tailwind v4, Shadcn UI, and Framer Motion.',
+      'Made the strategic call to reframe the secondary funnel from generic in-app product analytics into per-network revenue attribution (Meta/TikTok/Google/AppLovin), ensuring the product maintained its MMA positioning.',
+      "Partnered with the design lead on a UI modernization of Layers, the company's flagship UGC marketing platform — drove cross-app component standardization and shipped the content calendar redesign alongside adjacent surface updates.",
     ],
   },
   {
     number: '02',
-    company: 'Neue World',
-    location: 'Dubai, UAE (Remote)',
-    role: 'Lead Frontend Engineer',
-    period: 'July 2024 - May 2025',
+    company: 'EStation',
+    location: 'Lagos, Nigeria (Remote)',
+    role: 'Senior Full-Stack Developer',
+    period: 'June 2025 - March 2026',
     description:
-      'Engineered frontend infrastructure for enterprise applications, designing core systems for seamless content workflows.',
+      'Led frontend architecture across product initiatives, from terminal-grade POS systems to multi-tenant e-commerce engines and a JSON-driven headless CMS.',
     achievements: [
-      'Led the frontend development of Flozi, architecting a data-mapping system that synchronized Notion databases with Webflow CMS.',
-      'Contributed to backend development: models, controllers, third-party API integrations for Notion, Webflow, and email services.',
-      'Partnered with product and design leads to drive engineering strategy, reducing scope creep.',
+      'Built a terminal-grade POS with real-time sync, optimistic UI, and offline-first state management, reducing transaction time by 20%.',
+      'Architected a multi-tenant e-commerce engine and a JSON-driven headless CMS that cut content management complexity by 70% by empowering non-technical teams.',
+      'Managed coordination and code reviews, mentoring developers on modern patterns: Suspense, optimistic UI, auth flows, and LLM prompt engineering.',
     ],
   },
   {
     number: '03',
     company: 'Neue World',
     location: 'Dubai, UAE (Remote)',
-    role: 'Full Stack Engineer',
-    period: 'April 2023 - July 2024',
+    role: 'Lead Frontend Engineer',
+    period: 'July 2024 - May 2025',
     description:
-      'Built the frontend for a blockchain-enabled freelance platform, developing internal developer tools to support platform scalability.',
+      'Led frontend development of Flozi, an enterprise app, and drove engineering strategy across Layers and Flozi alongside product and design leads.',
     achievements: [
-      'Architected the frontend of Layers, a freelance platform, integrating blockchain wallet authentication using Polygon.',
-      'Developed a custom Figma plugin for automated asset transfers, reducing manual user effort and upload complexity.',
-      'Championed accessibility by authoring technical documentation and integrating WCAG standards.',
+      'Architected a core data-mapping system to sync Notion databases with Webflow CMS, and built a manual editor using Tiptap and ProseMirror.',
+      'Contributed backend APIs and third-party integrations for Notion and Webflow.',
+      'Partnered with product and design leads to drive engineering strategy for Layers and Flozi, aligning cross-functional stakeholders.',
     ],
   },
   {
     number: '04',
     company: 'Neue World',
     location: 'Dubai, UAE (Remote)',
-    role: 'Fullstack Developer Intern',
-    period: 'Feb 2023 - April 2023',
+    role: 'Full-Stack Developer',
+    period: 'Feb 2023 - July 2024',
     description:
-      'Accelerated project delivery for Webflow clients through high-fidelity animations and components.',
+      'Architected the frontend of Layers, a freelance platform, and championed accessibility and high-fidelity delivery across Webflow client work.',
     achievements: [
-      'Accelerated project delivery by over 50% with native HTML/CSS/JS animations for clients like ICCA Dubai.',
-      'Reduced developer-designer feedback cycles by 20% through proactive UI/UX modifications.',
+      'Integrated a Polygon blockchain layer for secure wallet authentication and contract signing, and built a custom Figma plugin that automated asset transfers.',
+      'Championed company-wide accessibility by authoring WCAG technical documentation and integrating standards into engineering workflows.',
+      'Accelerated Webflow client delivery (incl. ICCA Dubai) by over 50% via high-fidelity native HTML/CSS/JS animations.',
     ],
+  },
+]
+
+// Project data for Layers AI
+const layersAiProjects = [
+  {
+    id: 'app-machina',
+    title: 'App Machina',
+    subtitle: 'Mobile Measurement Agent',
+    description:
+      'Marketing site + per-network revenue attribution dashboard.',
+    variant: 'cream' as const,
+    url: 'https://layers-app-machina.vercel.app/',
+  },
+  {
+    id: 'layers-app',
+    title: 'Layers',
+    subtitle: 'UGC Marketing Platform',
+    description:
+      'Content calendar redesign and cross-app component standardization.',
+    variant: 'white' as const,
+    url: 'https://app.layers.com/create-project/54aa1639-9c6a-418b-9a1b-c1c0d3e68aff/start',
   },
 ]
 
@@ -78,7 +100,7 @@ const estationProjects = [
     title: 'B2C Ecommerce',
     subtitle: 'Online Storefront',
     description: 'Full-featured e-commerce platform.',
-    variant: 'cream' as const,
+    variant: 'white' as const,
     url: 'http://newb2c-web-phfnwx-0d6399-134-209-140-121.traefik.me/',
   },
   {
@@ -106,7 +128,7 @@ const neueProjects = [
     title: 'Flozi',
     subtitle: 'Enterprise App',
     description: 'Notion-to-Webflow data mapping system.',
-    variant: 'black' as const,
+    variant: 'cream' as const,
     url: 'https://app.flozi.io/onboarding/login',
   },
   {
@@ -461,13 +483,15 @@ export function ResumeSection() {
 
       <JobCard experience={experiences[0]} index={0} />
 
-      <ProjectGrid projects={estationProjects} bgClass="bg-black" />
+      <ProjectGrid projects={layersAiProjects} bgClass="bg-black" />
 
       <JobCard experience={experiences[1]} index={1} />
 
-      <ProjectGrid projects={neueProjects} bgClass="bg-cream" />
+      <ProjectGrid projects={estationProjects} bgClass="bg-cream" />
 
       <JobCard experience={experiences[2]} index={2} />
+
+      <ProjectGrid projects={neueProjects} bgClass="bg-black" />
 
       <JobCard experience={experiences[3]} index={3} />
     </section>

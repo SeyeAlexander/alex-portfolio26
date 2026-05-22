@@ -18,20 +18,20 @@ export const Route = createRootRoute({
       // Basic
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'Seye Alexander | Fullstack Developer & React Engineer' },
+      { title: 'Seye Alexander | Senior Frontend Engineer & React Developer' },
 
       // SEO Description
       {
         name: 'description',
         content:
-          'Seye Alexander (Oluwaseye Alexander) - Fullstack Developer & React Engineer at EStation. Building high-performance apps and collaborative tools at the intersection of design and engineering.',
+          "Seye Alexander (Oluwaseye Alexander) - Senior Frontend Engineer at Layers AI. Shipped App Machina end-to-end and building collaborative tools at the intersection of design and engineering.",
       },
 
       // Keywords (helps with relevance signals)
       {
         name: 'keywords',
         content:
-          'Seye Alexander, Oluwaseye Alexander, seyealexander, fullstack developer, react engineer, react developer, frontend developer, software engineer, Nigeria developer, EStation, web developer, TypeScript, Next.js, Node.js',
+          'Seye Alexander, Oluwaseye Alexander, seyealexander, senior frontend engineer, react engineer, react developer, frontend developer, software engineer, fullstack developer, Layers AI, App Machina, web developer, TypeScript, React, Next.js, TanStack, Node.js',
       },
 
       // Author
@@ -48,12 +48,12 @@ export const Route = createRootRoute({
       { property: 'og:url', content: SITE_URL },
       {
         property: 'og:title',
-        content: 'Seye Alexander | Fullstack Developer & React Engineer',
+        content: 'Seye Alexander | Senior Frontend Engineer & React Developer',
       },
       {
         property: 'og:description',
         content:
-          'Fullstack Developer & React Engineer at EStation. Building high-performance apps and collaborative tools at the intersection of design and engineering.',
+          'Senior Frontend Engineer at Layers AI. Shipped App Machina end-to-end and building collaborative tools at the intersection of design and engineering.',
       },
       { property: 'og:image', content: `${SITE_URL}/og-image.png` },
       { property: 'og:site_name', content: 'Seye Alexander' },
@@ -64,12 +64,12 @@ export const Route = createRootRoute({
       { name: 'twitter:url', content: SITE_URL },
       {
         name: 'twitter:title',
-        content: 'Seye Alexander | Fullstack Developer & React Engineer',
+        content: 'Seye Alexander | Senior Frontend Engineer & React Developer',
       },
       {
         name: 'twitter:description',
         content:
-          'Fullstack Developer & React Engineer at EStation. Building high-performance apps and collaborative tools.',
+          'Senior Frontend Engineer at Layers AI. Shipped App Machina end-to-end and building collaborative tools.',
       },
       { name: 'twitter:image', content: `${SITE_URL}/og-image.png` },
 
@@ -118,10 +118,10 @@ export const Route = createRootRoute({
           '@type': 'Person',
           name: 'Seye Alexander',
           alternateName: ['Oluwaseye Alexander', 'seyealexander'],
-          jobTitle: 'Fullstack Developer',
+          jobTitle: 'Senior Frontend Engineer',
           worksFor: {
             '@type': 'Organization',
-            name: 'EStation',
+            name: 'Layers AI',
           },
           url: SITE_URL,
           sameAs: [
@@ -134,12 +134,14 @@ export const Route = createRootRoute({
             'TypeScript',
             'Node.js',
             'Next.js',
-            'Fullstack Development',
+            'TanStack Router',
+            'Tailwind CSS',
             'Frontend Development',
+            'Fullstack Development',
             'Web Development',
           ],
           description:
-            'Fullstack Developer & React Engineer at EStation, architecting high-performance apps and collaborative tools.',
+            'Senior Frontend Engineer at Layers AI, shipping App Machina end-to-end and building collaborative tools.',
         }),
       },
     ],

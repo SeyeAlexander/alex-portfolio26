@@ -85,20 +85,23 @@ export function AboutSection() {
           <motion.p variants={paragraphVariant}>
             Currently, I'm a{' '}
             <span className="text-orange font-bold">
-              Senior Frontend Developer at EStation
+              Senior Frontend Engineer at Layers AI
             </span>
-            , where I lead frontend architecture across multiple product
-            initiatives — from terminal-grade POS systems to multi-tenant
-            e-commerce engines. I manage code reviews, mentor developers, and
-            drive technical decisions on modern patterns including optimistic
-            UI, offline-first state, and LLM prompt engineering.
+            , where I designed and shipped App Machina end-to-end — positioning
+            it as the first Mobile Measurement Agent (MMA). I built the
+            marketing site and a seven-surface authenticated dashboard with
+            React 19, TanStack Router, Tailwind v4, Shadcn UI, and Framer
+            Motion, and partnered with the design lead on a UI modernization
+            of Layers, the company's flagship UGC marketing platform.
           </motion.p>
           <motion.p variants={paragraphVariant}>
-            Previously, I led frontend development at Neue World, architecting
-            platforms like Flozi (Notion-to-Webflow sync) and Layers
-            (blockchain-integrated freelance platform). I've worked across
-            startups, remote studios, and agencies — always focused on shipping
-            software that matters.
+            Previously at EStation, I built a terminal-grade POS with real-time
+            sync and offline-first state, and architected a multi-tenant
+            e-commerce engine plus a JSON-driven headless CMS. Before that, I
+            led frontend at Neue World on Flozi (Notion-to-Webflow sync) and
+            Layers (blockchain-integrated freelance platform). I've worked
+            across startups, remote studios, and agencies — always focused on
+            shipping software that matters.
           </motion.p>
           <motion.p variants={paragraphVariant}>
             When I'm not shipping features, you'll find me refining components,
