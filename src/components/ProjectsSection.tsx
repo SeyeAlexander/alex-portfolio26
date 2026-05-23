@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Github, ChevronLeft, ChevronRight, X, Globe } from 'lucide-react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -94,27 +94,18 @@ export function ProjectsSection() {
       ))}
 
       <div className="px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-12 md:mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ margin: '-50px' }}
-            transition={{
-              duration: 0.6,
-              ease: [0.25, 0.46, 0.45, 0.94] as const,
-            }}
-            className="font-korium text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4"
-          >
-            PROJECTS
-          </motion.h2>
-          <p className="font-geist text-lg md:text-xl text-white/70 max-w-2xl">
-            I build ambitious, no-fluff projects to stay sharp and push my
-            limits. Here's what's currently in the forge.
-          </p>
+        {/* Subheader — Studio above already carries the umbrella fronter,
+            so we keep this small and let TextFlow's card carry the weight. */}
+        <div className="mb-8 md:mb-10 flex items-center gap-3">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange/80" />
+          <span className="font-geist-mono text-[11px] uppercase tracking-[0.3em] text-white/55">
+            Featured Build · Currently in the forge
+          </span>
         </div>
 
-        {/* Project Card - TextFlow */}
+        {/* TextFlow block — no outer rounded container. Content sits on
+            the section's bg and inner panels carry the architectural
+            crosshair language. */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -122,189 +113,137 @@ export function ProjectsSection() {
           variants={fadeInUp}
           className="relative"
         >
-          {/* Main inset card */}
-          <div className="relative border border-white/20 bg-black overflow-hidden">
-            {/* Inner grid lines for inset effect */}
-            <div className="absolute top-4 left-4 right-4 bottom-4 border border-white/10 pointer-events-none z-10" />
+          {/* Top row: status pill */}
+          <div className="mb-8 flex items-center justify-between">
+            <span className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/8 px-3 py-1">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-500" />
+              <span className="font-geist-mono text-[10px] uppercase tracking-[0.26em] text-green-500">
+                Live
+              </span>
+            </span>
+          </div>
 
-            {/* Content */}
-            <div className="p-8 md:p-12 lg:p-16 relative z-20">
-              {/* Top row: Status */}
-              <div className="flex items-start justify-between mb-8">
-                <div className="flex items-center gap-3">
-                  <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
-                  <span className="font-geist-mono text-xs text-green-500 uppercase tracking-widest">
-                    Live
-                  </span>
+          {/* Title */}
+          <h3 className="font-korium text-6xl md:text-8xl lg:text-[110px] font-bold text-cream leading-none mb-10">
+            TextFlow
+          </h3>
+
+          {/* Philosophy grid — sharp crosshair panels */}
+          <div className="mb-12 grid grid-cols-1 gap-px bg-white/12 md:grid-cols-2">
+            {[
+              {
+                title: 'Zero to One',
+                body: 'Architected completely from the ground up. No boilerplate, just thoughtful engineering from day one.',
+              },
+              {
+                title: 'AI-Driven Design',
+                body: 'Interface designed on the fly using LLMs. No Figma files. Rapid, iterative aesthetic layering.',
+              },
+              {
+                title: 'Visuals via Nano Banana',
+                body: 'Leveraging Nano Banana for unique, high-fidelity image assets to sell the vision.',
+              },
+              {
+                title: 'System Mastery',
+                body: 'Deep integration knowledge: database design, real-time sync, and conflict resolution.',
+              },
+            ].map((entry) => (
+              <CrosshairPanel key={entry.title}>
+                <h4 className="font-geist text-base font-bold text-white mb-1.5">
+                  {entry.title}
+                </h4>
+                <p className="font-geist-mono text-[12px] leading-6 text-white/55">
+                  {entry.body}
+                </p>
+              </CrosshairPanel>
+            ))}
+          </div>
+
+          {/* Actions */}
+          <div className="mb-10 flex flex-wrap gap-3">
+            <a
+              href="https://textflow.seyealexander.dev/dashboard"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-geist text-sm font-bold text-black transition-colors hover:bg-cream"
+            >
+              <Globe size={18} />
+              Live Demo
+            </a>
+            <a
+              href="https://github.com/SeyeAlexander/TextFlow"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 font-geist text-sm font-bold text-white transition-colors hover:border-white/30 hover:bg-white/[0.04]"
+            >
+              <Github size={18} />
+              View Code
+            </a>
+          </div>
+
+          {/* Tech stack — square (not rounded) sharp pills with thin border */}
+          <div className="mb-12 flex flex-wrap gap-2">
+            {[
+              'Next.js',
+              'TypeScript',
+              'React',
+              'Lexical',
+              'Supabase',
+              'Drizzle ORM',
+              'Yjs (CRDTs)',
+              'WebSockets',
+            ].map((tech) => (
+              <span
+                key={tech}
+                className="inline-flex items-center border border-white/15 px-3 py-1.5 font-geist-mono text-[11px] text-white/70 transition-colors hover:border-orange/60 hover:text-orange"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {/* Technical features — sharp crosshair panels */}
+          <div className="grid grid-cols-1 gap-px bg-white/12 md:grid-cols-3">
+            {[
+              {
+                title: 'Block-Based Editor',
+                body: 'Custom Lexical implementation with rich content blocks',
+                dot: 'bg-orange',
+              },
+              {
+                title: 'Real-Time Collaboration',
+                body: 'CRDTs for conflict-free sync + live cursor tracking',
+                dot: 'bg-deep-orange',
+              },
+              {
+                title: 'PostgreSQL Backend',
+                body: 'Supabase + Drizzle ORM for type-safe queries',
+                dot: 'bg-cream',
+              },
+            ].map((entry) => (
+              <CrosshairPanel key={entry.title}>
+                <div className="mb-2 flex items-center gap-2">
+                  <span
+                    className={`inline-block h-1.5 w-1.5 ${entry.dot}`}
+                  />
+                  <h4 className="font-geist text-sm font-bold text-white">
+                    {entry.title}
+                  </h4>
                 </div>
-              </div>
-
-              {/* Main Content Layout */}
-              <div className="mb-12">
-                {/* Project Name */}
-                <h3 className="font-korium text-6xl md:text-8xl lg:text-[100px] font-bold text-cream leading-none mb-6">
-                  TextFlow
-                </h3>
-
-                {/* Subtitle / Philosophy Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
-                  <div className="space-y-2">
-                    <h4 className="font-geist text-white font-bold text-lg">
-                      Zero to One
-                    </h4>
-                    <p className="font-geist-mono text-xs text-white/60 leading-relaxed">
-                      Architected completely from the ground up. No boilerplate,
-                      just pure, thoughtful engineering from day one.
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="font-geist text-white font-bold text-lg">
-                      AI-Driven Design
-                    </h4>
-                    <p className="font-geist-mono text-xs text-white/60 leading-relaxed">
-                      Interface designed on the fly using LLMs. No Figma files.
-                      Just rapid, iterative aesthetic layering.
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="font-geist text-white font-bold text-lg">
-                      Visuals via Nano Banana
-                    </h4>
-                    <p className="font-geist-mono text-xs text-white/60 leading-relaxed">
-                      Leveraging Nano Banana for generating unique,
-                      high-fidelity image assets to sell the vision.
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="font-geist text-white font-bold text-lg">
-                      System Mastery
-                    </h4>
-                    <p className="font-geist-mono text-xs text-white/60 leading-relaxed">
-                      Showcasing deep integration knowledge: Database design,
-                      Real-time sync, and Conflict resolution.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Actions */}
-                <div className="flex flex-wrap gap-4 mb-10">
-                  <a
-                    href="https://textflow.seyealexander.dev/dashboard"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-geist font-bold rounded-full hover:bg-cream transition-colors"
-                  >
-                    <Globe size={20} />
-                    Live Demo
-                  </a>
-                  <a
-                    href="https://github.com/SeyeAlexander/TextFlow"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white font-geist font-bold rounded-full hover:bg-white/10 transition-colors"
-                  >
-                    <Github size={20} />
-                    View Code
-                  </a>
-                </div>
-
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-3 mb-10">
-                  {[
-                    'Next.js',
-                    'TypeScript',
-                    'React',
-                    'Lexical',
-                    'Supabase',
-                    'Drizzle ORM',
-                    'Yjs (CRDTs)',
-                    'WebSockets',
-                  ].map((tech) => (
-                    <span
-                      key={tech}
-                      className="font-geist-mono text-xs px-3 py-1.5 border border-white/20 text-white/70 hover:text-orange hover:border-orange transition-colors"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Technical Features */}
-                <div className="border-t border-white/10 pt-8 mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                  <div className="border-l-2 border-orange pl-4">
-                    <h4 className="font-geist text-sm font-bold text-white mb-1">
-                      Block-Based Editor
-                    </h4>
-                    <p className="font-geist-mono text-xs text-white/50">
-                      Custom Lexical implementation with rich content blocks
-                    </p>
-                  </div>
-                  <div className="border-l-2 border-deep-orange pl-4">
-                    <h4 className="font-geist text-sm font-bold text-white mb-1">
-                      Real-Time Collaboration
-                    </h4>
-                    <p className="font-geist-mono text-xs text-white/50">
-                      CRDTs for conflict-free sync + live cursor tracking
-                    </p>
-                  </div>
-                  <div className="border-l-2 border-cream pl-4">
-                    <h4 className="font-geist text-sm font-bold text-white mb-1">
-                      PostgreSQL Backend
-                    </h4>
-                    <p className="font-geist-mono text-xs text-white/50">
-                      Supabase + Drizzle ORM for type-safe queries
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <p className="font-geist-mono text-[11px] leading-6 text-white/50">
+                  {entry.body}
+                </p>
+              </CrosshairPanel>
+            ))}
           </div>
         </motion.div>
       </div>
 
-      <div className="px-6 md:px-10 lg:px-10 max-w-8xl mx-auto">
-        {/* Marquee Section - Decoupled from card */}
-        <div className="mt-12 md:mt-16 w-full overflow-hidden">
-          {/* Marquee Track */}
-          <div
-            className="flex gap-6 hover:paused"
-            style={{
-              width: 'max-content',
-              animation: 'marquee 60s linear infinite',
-            }}
-          >
-            {/* Triple the array for extra safety on wide screens, ensuring seamless loop */}
-            {[...screenshots, ...screenshots, ...screenshots].map(
-              (src, idx) => (
-                <div
-                  key={`${src}-${idx}`}
-                  onClick={() =>
-                    setSelectedImageIndex(idx % screenshots.length)
-                  }
-                  className="relative shrink-0 w-[400px] cursor-pointer group/image"
-                >
-                  <img
-                    src={src}
-                    alt={`TextFlow Screenshot ${idx}`}
-                    className="w-full h-auto object-cover opacity-100 transition-opacity" // Ensure sharp by default
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity">
-                    <span className="text-white text-xs font-geist-mono bg-black/80 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-md">
-                      View
-                    </span>
-                  </div>
-                </div>
-              ),
-            )}
-          </div>
-
-          <style>{`
-                @keyframes marquee {
-                  0% { transform: translateX(0); }
-                  100% { transform: translateX(-33.33%); }
-                }
-              `}</style>
-        </div>
+      <div className="mt-12 md:mt-16 w-full">
+        <CoverflowCarousel
+          items={screenshots}
+          onSelect={(idx) => setSelectedImageIndex(idx)}
+        />
       </div>
 
       {/* Image Modal */}
@@ -376,5 +315,278 @@ export function ProjectsSection() {
         </Dialog.Portal>
       </Dialog.Root>
     </section>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// CrosshairPanel
+//
+// Sharp-edged content panel framed by the site's architectural crosshair
+// language: tiny + marks at each corner, 1px hairlines between siblings
+// (provided by the parent grid's `gap-px bg-white/12` trick). Lives inside
+// the TextFlow card to keep the visual language consistent with Stats,
+// Resume, and the Studio section above.
+// ---------------------------------------------------------------------------
+
+function CrosshairPanel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative bg-black p-5">
+      {/* Crosshair marks at each corner */}
+      {[
+        '-top-[5px] -left-[5px]',
+        '-top-[5px] -right-[5px]',
+        '-bottom-[5px] -left-[5px]',
+        '-bottom-[5px] -right-[5px]',
+      ].map((pos, i) => (
+        <span
+          key={i}
+          aria-hidden="true"
+          className={`pointer-events-none absolute ${pos} z-10 flex h-2.5 w-2.5 items-center justify-center`}
+        >
+          <span className="absolute h-px w-full bg-white/55" />
+          <span className="absolute h-full w-px bg-white/55" />
+        </span>
+      ))}
+      {children}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// CoverflowCarousel
+//
+// Horizontal scroll-snap carousel where the centermost card is largest and
+// the neighbors scale down progressively based on distance from the viewport
+// center. Replaces the previous infinite marquee — gives focus instead of
+// constant ambient motion.
+// ---------------------------------------------------------------------------
+
+const CARD_WIDTH = 280
+const CARD_GAP = 8
+
+function CoverflowCarousel({
+  items,
+  onSelect,
+}: {
+  items: string[]
+  onSelect: (idx: number) => void
+}) {
+  const scrollerRef = useRef<HTMLDivElement | null>(null)
+  const itemRefs = useRef<Array<HTMLButtonElement | null>>([])
+  const initialCenterRef = useRef(false)
+  const rafIdRef = useRef<number | null>(null)
+  const [activeIndex, setActiveIndex] = useState(() => Math.floor(items.length / 2))
+
+  // Compute scale from absolute distance ratio (0 = centre, ±1 = one card
+  // away, ±2 = two away, ...). Smoothly decays, floored so far cards still
+  // hint at being there.
+  const scaleFor = (ratio: number) => Math.max(1 - ratio * 0.22, 0.5)
+  // Opacity decays similarly, less aggressive than scale.
+  const opacityFor = (ratio: number) => Math.max(1 - ratio * 0.18, 0.55)
+
+  // Layout pass. Writes transforms directly to DOM (refs) inside rAF — no
+  // React state per scroll event, which removes the per-frame re-render
+  // jitter that was visible when cards passed through the centre.
+  useEffect(() => {
+    const scroller = scrollerRef.current
+    if (!scroller) return
+
+    const apply = () => {
+      rafIdRef.current = null
+      const rect = scroller.getBoundingClientRect()
+      const centerX = rect.left + rect.width / 2
+
+      // First pass: collect each item's ratio and signed direction.
+      const ratios: number[] = []
+      const signs: number[] = []
+      let nearest = 0
+      let nearestDistance = Number.POSITIVE_INFINITY
+
+      itemRefs.current.forEach((el, i) => {
+        if (!el) {
+          ratios[i] = 99
+          signs[i] = 0
+          return
+        }
+        const r = el.getBoundingClientRect()
+        const itemCenter = r.left + r.width / 2
+        const dx = itemCenter - centerX
+        const absDx = Math.abs(dx)
+        ratios[i] = absDx / (CARD_WIDTH + CARD_GAP)
+        signs[i] = absDx < 8 ? 0 : dx < 0 ? -1 : 1
+        if (absDx < nearestDistance) {
+          nearestDistance = absDx
+          nearest = i
+        }
+      })
+
+      // Second pass: compute cumulative translateX so visual gaps stay
+      // uniform. Each scaled card leaves W*(1-scale) of empty layout space;
+      // half goes on each side. To close that gap we translate the card
+      // toward centre by the cumulative empty space between it and the
+      // nearest card on the centre-side.
+      const translates: number[] = new Array(ratios.length).fill(0)
+
+      // Walk right from the active index.
+      let accumRight = 0
+      for (let i = nearest + 1; i < ratios.length; i++) {
+        const prevScale = i === nearest + 1 ? 1 : scaleFor(ratios[i - 1])
+        const myScale = scaleFor(ratios[i])
+        // Empty space between i-1 and i = right half of i-1 + left half of i
+        const emptySpace =
+          (CARD_WIDTH * (1 - prevScale)) / 2 + (CARD_WIDTH * (1 - myScale)) / 2
+        accumRight += emptySpace
+        translates[i] = -accumRight
+      }
+
+      // Walk left from the active index.
+      let accumLeft = 0
+      for (let i = nearest - 1; i >= 0; i--) {
+        const prevScale = i === nearest - 1 ? 1 : scaleFor(ratios[i + 1])
+        const myScale = scaleFor(ratios[i])
+        const emptySpace =
+          (CARD_WIDTH * (1 - prevScale)) / 2 + (CARD_WIDTH * (1 - myScale)) / 2
+        accumLeft += emptySpace
+        translates[i] = accumLeft
+      }
+
+      // Third pass: write final transforms straight to the DOM.
+      itemRefs.current.forEach((el, i) => {
+        if (!el) return
+        const scale = scaleFor(ratios[i])
+        const tx = translates[i]
+        el.style.transform = `translateX(${tx}px) scale(${scale})`
+        // Keep transform-origin centred — we're now translating manually,
+        // origin doesn't need to do the work.
+        el.style.transformOrigin = 'center center'
+        el.style.opacity = String(opacityFor(ratios[i]))
+      })
+
+      if (nearest !== activeIndex) setActiveIndex(nearest)
+    }
+
+    const schedule = () => {
+      if (rafIdRef.current !== null) return
+      rafIdRef.current = requestAnimationFrame(apply)
+    }
+
+    // Initial center jump (auto, not smooth) so we open already centred.
+    if (!initialCenterRef.current) {
+      const middle = Math.floor(items.length / 2)
+      const target = itemRefs.current[middle]
+      if (target) {
+        const elCenter = target.offsetLeft + target.offsetWidth / 2
+        scroller.scrollTo({
+          left: elCenter - scroller.clientWidth / 2,
+          behavior: 'auto',
+        })
+        initialCenterRef.current = true
+      }
+    }
+
+    apply()
+    scroller.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    return () => {
+      if (rafIdRef.current !== null) cancelAnimationFrame(rafIdRef.current)
+      scroller.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items.length])
+
+  const scrollToIndex = (idx: number) => {
+    const el = itemRefs.current[idx]
+    if (!el || !scrollerRef.current) return
+    const scroller = scrollerRef.current
+    const elCenter = el.offsetLeft + el.offsetWidth / 2
+    scroller.scrollTo({
+      left: elCenter - scroller.clientWidth / 2,
+      behavior: 'smooth',
+    })
+  }
+
+  return (
+    <div className="relative">
+      {/* Scroll track. The horizontal padding equals (50vw - half a card
+          width) so the first and last cards can land at the visual centre
+          when snapped. */}
+      <div
+        ref={scrollerRef}
+        className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto overflow-y-visible py-10"
+        style={{
+          gap: `${CARD_GAP}px`,
+          paddingLeft: `calc(50vw - ${CARD_WIDTH / 2}px)`,
+          paddingRight: `calc(50vw - ${CARD_WIDTH / 2}px)`,
+        }}
+      >
+        {items.map((src, idx) => {
+          return (
+            <button
+              key={`${src}-${idx}`}
+              ref={(el) => {
+                itemRefs.current[idx] = el
+              }}
+              type="button"
+              onClick={() => {
+                if (idx === activeIndex) {
+                  onSelect(idx)
+                } else {
+                  scrollToIndex(idx)
+                }
+              }}
+              className="group/card relative shrink-0 snap-center"
+              style={{
+                width: CARD_WIDTH,
+                // Initial transform — the rAF handler will overwrite this on
+                // first paint. No CSS transition so scroll-driven transforms
+                // follow the scroll position without lagging or jittering.
+                transform: 'translateX(0) scale(1)',
+                opacity: 1,
+                willChange: 'transform, opacity',
+              }}
+              aria-label={`TextFlow screenshot ${idx + 1}`}
+            >
+              <div className="overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.02] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)]">
+                <img
+                  src={src}
+                  alt={`TextFlow Screenshot ${idx + 1}`}
+                  className="block h-auto w-full object-cover"
+                  draggable={false}
+                />
+              </div>
+              {/* View overlay only on the centered card */}
+              {idx === activeIndex ? (
+                <div className="pointer-events-none absolute inset-0 flex items-end justify-center pb-6 opacity-0 transition-opacity duration-300 group-hover/card:opacity-100">
+                  <span className="rounded-full border border-white/20 bg-black/85 px-3 py-1.5 font-geist-mono text-[11px] text-white backdrop-blur">
+                    Click to expand
+                  </span>
+                </div>
+              ) : null}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Dots */}
+      <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5 px-6">
+        {items.map((_, idx) => {
+          const active = idx === activeIndex
+          return (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => scrollToIndex(idx)}
+              aria-label={`Go to screenshot ${idx + 1}`}
+              className={
+                active
+                  ? 'h-1.5 w-7 rounded-full bg-orange transition-all duration-300'
+                  : 'h-1.5 w-1.5 rounded-full bg-white/20 transition-all duration-300 hover:bg-white/40'
+              }
+            />
+          )
+        })}
+      </div>
+    </div>
   )
 }

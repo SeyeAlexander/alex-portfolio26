@@ -266,6 +266,19 @@ html {
   scrollbar-color: hsl(240 5% 26%) hsl(240 10% 3.9%);
 }
 
+/* Utility: completely hide the native scrollbar on a specific element.
+   Used by the TextFlow coverflow carousel — the dots underneath act as
+   the only scroll indicator. */
+.no-scrollbar {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 /* ============================================================================
    TOUCH DEVICE OPTIMIZATION
    Disable hover/active states on touch devices for better UX
@@ -287,6 +300,20 @@ html {
   a:hover,
   button:hover {
     opacity: 1 !important;
+  }
+}
+
+/* Clean + Notes: no hover styling on mobile/tablet — taps only */
+@media (max-width: 1023px) {
+  .clean-surface :is(a, button):hover {
+    color: inherit !important;
+    background-color: inherit !important;
+    background-image: none !important;
+    border-color: inherit !important;
+    opacity: inherit !important;
+    transform: none !important;
+    box-shadow: inherit !important;
+    filter: none !important;
   }
 }
 

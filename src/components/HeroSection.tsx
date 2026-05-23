@@ -11,7 +11,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="min-h-screen relative overflow-hidden flex flex-col bg-cream"
+      className="h-screen min-h-[100dvh] relative overflow-hidden flex flex-col bg-cream"
     >
       {/* Grid Background - hidden on mobile for cleaner look */}
       <GridBackground />
@@ -20,7 +20,7 @@ export function HeroSection() {
       {/* <WireframeMesh className="hidden lg:block inset-0 z-0" /> */}
 
       {/* Header containing Logo and Nav */}
-      <header className="relative z-10 pt-4 px-4 lg:pt-5 lg:px-[20px] flex items-center justify-between">
+      <header className="relative z-10 shrink-0 pt-4 px-4 lg:pt-5 lg:px-[20px] flex items-center justify-between">
         <div className="lg:pl-4 lg:w-1/4">
           <Link
             to="/"
@@ -34,18 +34,18 @@ export function HeroSection() {
         {/* Mobile: Simple row layout | Desktop: Absolute positioned */}
         <div className="flex items-center gap-4 lg:hidden">
           <a
-            href="#me"
-            onClick={() => playSound('tap')}
-            className="font-korium text-lg font-medium tracking-wider text-black"
-          >
-            About Me
-          </a>
-          <a
             href="#resume"
             onClick={() => playSound('tap')}
             className="font-korium text-lg font-medium tracking-wider text-black"
           >
-            Resume
+            Experience
+          </a>
+          <a
+            href="#studio"
+            onClick={() => playSound('tap')}
+            className="font-korium text-lg font-medium tracking-wider text-black"
+          >
+            Builds
           </a>
           <SoundToggle />
         </div>
@@ -53,18 +53,18 @@ export function HeroSection() {
         {/* Desktop Nav - hidden on mobile */}
         <nav className="hidden lg:flex absolute inset-x-0 top-5 pointer-events-none">
           <a
-            href="#me"
+            href="#resume"
             onClick={() => playSound('tap')}
             className="absolute left-[37.5%] -translate-x-1/2 font-korium text-xl lg:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
           >
-            About Me
+            Experience
           </a>
           <a
-            href="#resume"
+            href="#studio"
             onClick={() => playSound('tap')}
             className="absolute left-[62.5%] -translate-x-1/2 font-korium text-xl lg:text-2xl font-medium tracking-widest text-black transition-transform duration-200 ease-out hover:text-black/60 hover:scale-95 pointer-events-auto"
           >
-            Resume
+            Builds
           </a>
           <div className="absolute left-[96.5%] -translate-x-1/2 pointer-events-auto">
             <SoundToggle />
@@ -72,33 +72,20 @@ export function HeroSection() {
         </nav>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1 relative z-10 flex flex-col justify-center px-6 lg:px-0 pt-20 md:pt-64">
-        {/* Name Display */}
-        <div className="flex items-center justify-center lg:py-0">
+      {/* Main Content — name + mobile resume; status strip is a section sibling */}
+      <main className="flex-1 min-h-0 relative z-10 flex flex-col px-6 lg:px-0 pt-16 md:pt-20 lg:pt-0">
+        {/* Desktop: name sits ~50px above the status strip top line (bottom 180px) */}
+        <div className="flex flex-1 min-h-0 flex-col items-center justify-center lg:absolute lg:inset-x-0 lg:top-auto lg:bottom-[230px] lg:flex-none lg:justify-center">
           <NameDisplay />
         </div>
 
-        {/* Professional Summary - Below name on mobile, absolute on desktop */}
-        <div className="lg:absolute lg:top-[51%] lg:right-3 lg:pl-4 lg:w-1/4 mt-8 lg:mt-0 px-4 lg:px-0">
-          <ShortSummary />
+        <div className="shrink-0 px-4 pb-8 pt-6 lg:hidden">
+          <ResumeButton />
         </div>
-
-        {/* Button - Full width on mobile, positioned on desktop */}
-        <div className="mt-8 lg:mt-0 px-4 lg:px-0 lg:absolute lg:bottom-[20px] h-14 md:h-[70px] lg:h-14 lg:left-[20px] lg:right-[75%] z-20">
-          <div className="h-14 md:h-[70px] lg:h-14">
-            <ResumeButton />
-          </div>
-        </div>
-
-        {/* TextFlow Teaser - Desktop Only */}
-        <div className="hidden lg:block absolute top-[120px] right-[8%] z-20">
-          <TextFlowTeaser />
-        </div>
-
-        {/* Bottom spacing on mobile */}
-        <div className="h-8 lg:hidden" />
       </main>
+
+      {/* Status strip — desktop only, anchored to bottom grid frame */}
+      <StatusStrip />
     </section>
   )
 }
@@ -118,18 +105,25 @@ function GridBackground() {
 
       {/* Crosshairs for Line 1 */}
       <Crosshair className="absolute top-[75px] left-[20px]" />
-      <Crosshair className="absolute top-[64%] left-[50%]" />
+      {/* Under ALEXANDER — low, just above the four status cells */}
+      <Crosshair className="absolute bottom-[218px] left-[50%]" />
       <Crosshair className="absolute top-[75px] right-[9px]" />
 
-      {/* Lines 2 & 3: Info rectangle */}
-      <div className="absolute bottom-[75px] left-[20px] right-[75%] h-px bg-grid" />
-      <div className="absolute bottom-[20px] left-[20px] right-[75%] h-px bg-grid" />
+      {/* Lines 2 & 3: Status strip frame (full width, 4 cells) */}
+      <div className="absolute bottom-[180px] left-[20px] right-[20px] h-px bg-grid" />
+      <div className="absolute bottom-[20px] left-[20px] right-[20px] h-px bg-grid" />
 
-      {/* Crosshairs for rectangle */}
-      <Crosshair className="absolute bottom-[64px] left-[20px]" />
-      <Crosshair className="absolute bottom-[64px] left-[25%]" />
+      {/* Crosshairs at every column intersection of the strip frame */}
+      <Crosshair className="absolute bottom-[169px] left-[20px]" />
+      <Crosshair className="absolute bottom-[169px] left-[25%]" />
+      <Crosshair className="absolute bottom-[169px] left-[50%]" />
+      <Crosshair className="absolute bottom-[169px] left-[75%]" />
+      <Crosshair className="absolute bottom-[169px] right-[9px]" />
       <Crosshair className="absolute bottom-[9px] left-[20px]" />
       <Crosshair className="absolute bottom-[9px] left-[25%]" />
+      <Crosshair className="absolute bottom-[9px] left-[50%]" />
+      <Crosshair className="absolute bottom-[9px] left-[75%]" />
+      <Crosshair className="absolute bottom-[9px] right-[9px]" />
     </div>
   )
 }
@@ -188,9 +182,9 @@ function Logo() {
 function NameDisplay() {
   const { scrollYProgress } = useScroll()
 
-  // Disable parallax on mobile for performance
-  const seyeX = useTransform(scrollYProgress, [0, 0.3], [-200, -200])
-  const alexanderOffset = useTransform(scrollYProgress, [0, 0.3], [200, 100])
+  // Disable parallax on mobile for performance — completes over a shorter scroll span
+  const seyeX = useTransform(scrollYProgress, [0, 0.12], [-200, -200])
+  const alexanderOffset = useTransform(scrollYProgress, [0, 0.12], [200, 100])
 
   return (
     <div className="font-korium select-none text-black tracking-wide">
@@ -237,33 +231,7 @@ function NameDisplay() {
   )
 }
 
-function ShortSummary() {
-  return (
-    <motion.div
-      className="font-geist-mono text-sm md:text-base lg:text-sm leading-relaxed text-black/60 max-w-xs text-center lg:text-left mx-auto lg:mx-0"
-      initial={{ y: -30, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-        delay: 0.5,
-      }}
-    >
-      <p>
-        <span className="text-black font-bold">
-          Senior Frontend Engineer at Layers AI
-        </span>{' '}
-        shipping App Machina end-to-end. I build{' '}
-        <span className="text-black font-bold">collaborative tools</span> at the
-        intersection of{' '}
-        <span className="text-black font-bold">design and engineering</span>.
-        Driven by thoughtful design.
-      </p>
-    </motion.div>
-  )
-}
-
-function ResumeButton() {
+function ResumeButton({ compact = false }: { compact?: boolean }) {
   const { playSound } = useSounds()
 
   return (
@@ -272,79 +240,130 @@ function ResumeButton() {
       target="_blank"
       rel="noopener noreferrer"
       href="https://drive.google.com/file/d/1fem6meDrWDGHMQ0nuL5MqodLnUWQ_f9L/view?usp=sharing"
-      className="group bg-deep-orange hover:bg-[#CC3300] cursor-pointer active:scale-[0.99] transition-transform duration-200 ease-out text-white w-full h-full flex items-center rounded-4xl justify-center gap-5"
+      className={
+        compact
+          ? 'group bg-deep-orange hover:bg-[#CC3300] cursor-pointer active:scale-[0.99] transition-transform duration-200 ease-out text-white w-full flex items-center rounded-3xl justify-center gap-3 px-4 py-3 min-h-[52px]'
+          : 'group bg-deep-orange hover:bg-[#CC3300] cursor-pointer active:scale-[0.99] transition-transform duration-200 ease-out text-white w-full h-full flex items-center rounded-4xl justify-center gap-5 min-h-[56px]'
+      }
     >
-      <p className="font-geist-mono text-sm uppercase tracking-[0.2em] leading-tight font-medium">
+      <p
+        className={
+          compact
+            ? 'font-geist-mono text-xs uppercase tracking-[0.18em] leading-tight font-medium'
+            : 'font-geist-mono text-sm uppercase tracking-[0.2em] leading-tight font-medium'
+        }
+      >
         Software Engineer
       </p>
 
-      <ArrowUpRightIcon className="w-5 h-5 transition-transform duration-300 ease-out group-hover:translate-x-2 group-hover:-translate-y-1" />
+      <ArrowUpRightIcon
+        className={
+          compact
+            ? 'w-4 h-4 transition-transform duration-300 ease-out group-hover:translate-x-1.5 group-hover:-translate-y-0.5'
+            : 'w-5 h-5 transition-transform duration-300 ease-out group-hover:translate-x-2 group-hover:-translate-y-1'
+        }
+      />
     </a>
   )
 }
 
-function TextFlowTeaser() {
-  const { playSound } = useSounds()
+// ---------------------------------------------------------------------------
+// StatusStrip — desktop only
+//
+// Four cells sit inside the bottom grid frame, each aligned to the existing
+// vertical grid lines (left-[20px] · 1/4 · 1/2 · 3/4 · right-[20px]). The
+// horizontal frame lines + crosshairs are drawn by GridBackground; the cells
+// themselves are just absolutely-positioned content boxes.
+// ---------------------------------------------------------------------------
 
+type StatusCell = {
+  label: string
+  dot: string
+  title: React.ReactNode
+  sub: React.ReactNode
+  resumeCta?: boolean
+}
+
+const STATUS_CELLS: StatusCell[] = [
+  {
+    label: 'Now',
+    dot: 'bg-green-500',
+    title: 'Senior Frontend Engineer',
+    sub: 'Layers AI · Remote',
+  },
+  {
+    label: 'Shipping',
+    dot: 'bg-orange',
+    title: 'Clean & Notes',
+    sub: 'Component lab · writing space',
+  },
+  {
+    label: 'Open for',
+    dot: 'bg-black/55',
+    title: 'Senior FE roles',
+    sub: 'Remote-first · contract or full-time',
+  },
+  {
+    label: 'Resume',
+    dot: 'bg-deep-orange',
+    title: 'Software Engineer',
+    sub: 'PDF · updated 2026',
+    resumeCta: true,
+  },
+]
+
+// Each cell maps to one of the four columns defined by the grid lines.
+// Using inset values that match the lines exactly keeps everything aligned.
+const CELL_INSETS = [
+  'left-[20px] right-[75%]',
+  'left-[25%] right-[50%]',
+  'left-[50%] right-[25%]',
+  'left-[75%] right-[20px]',
+]
+
+function StatusStrip() {
   return (
-    <a
-      href="#projects"
-      onClick={() => playSound('tap')}
-      className="group block relative pl-8 pb-4"
-    >
-      {/* Decorative vertical line */}
-      <motion.div
-        initial={{ height: 0 }}
-        animate={{ height: '100%' }}
-        transition={{ duration: 0.8, delay: 1 }}
-        className="absolute left-0 top-0 w-px bg-black/20 group-hover:bg-orange transition-colors"
-      />
-
-      {/* Decorative tiny box */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute left-[-2px] top-0 w-1.5 h-1.5 bg-black"
-      />
-
-      <div className="space-y-1">
+    <div className="pointer-events-none hidden lg:block absolute inset-x-0 bottom-0 z-10 h-[180px]">
+      {STATUS_CELLS.map((cell, i) => (
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.3 }}
-          className="flex items-center gap-3"
+          key={cell.label}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.7 + i * 0.08,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
+          className={`pointer-events-auto absolute bottom-[20px] top-auto h-[160px] px-5 py-5 ${CELL_INSETS[i]}`}
         >
-          <span className="font-geist-mono text-[10px] text-orange tracking-[0.2em] uppercase">
-            Latest_Build detected
-          </span>
-          <span className="w-2 h-2 rounded-full bg-orange animate-pulse" />
+          <div className="flex h-full flex-col">
+            <div className="flex items-center gap-2.5">
+              <span
+                className={`inline-block h-2.5 w-2.5 shrink-0 ${cell.dot}`}
+                aria-hidden="true"
+              />
+              <span className="font-geist-mono text-xs uppercase tracking-[0.24em] text-black/55">
+                {cell.label}
+              </span>
+            </div>
+            {cell.resumeCta ? (
+              <div className="mt-auto pt-4">
+                <ResumeButton compact />
+              </div>
+            ) : (
+              <>
+                <p className="mt-3 font-geist text-base font-bold text-black leading-tight">
+                  {cell.title}
+                </p>
+                <div className="mt-auto font-geist-mono text-sm leading-5 text-black/55">
+                  {cell.sub}
+                </div>
+              </>
+            )}
+          </div>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.4 }}
-        >
-          <h4 className="font-korium text-4xl text-black group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r group-hover:from-orange group-hover:to-deep-orange transition-all duration-300">
-            TEXTFLOW
-          </h4>
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="font-geist-mono text-xs text-black/50 group-hover:text-black/80 transition-colors"
-        >
-          Collab Editor // v1.0
-        </motion.p>
-      </div>
-
-      {/* Hover Arrow */}
-      <div className="absolute right-[-40px] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-[-10px] transition-all duration-300 text-orange">
-        →
-      </div>
-    </a>
+      ))}
+    </div>
   )
 }
+

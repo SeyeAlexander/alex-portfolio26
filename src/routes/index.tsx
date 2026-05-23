@@ -3,6 +3,8 @@ import { HeroSection } from '../components/HeroSection'
 import { StatsSection } from '../components/StatsSection'
 import { AboutSection } from '../components/AboutSection'
 import { ResumeSection } from '../components/ResumeSection'
+import { StudioSection } from '../components/StudioSection'
+import { BuildsDivider } from '../components/BuildsDivider'
 import { ProjectsSection } from '../components/ProjectsSection'
 import { FooterSpacer } from '../components/FooterSpacer'
 import { FooterSection } from '../components/FooterSection'
@@ -19,6 +21,8 @@ function HomePage() {
       <StatsSection />
       <AboutSection />
       <ResumeSection />
+      <StudioSection />
+      <BuildsDivider />
       <ProjectsSection />
       <FooterSpacer />
       <FooterSection />

@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Volume2, VolumeX, Waves } from 'lucide-react'
+
 import { cn } from '@/lib/utils'
 
 type ThemeToggleProps = {
@@ -30,7 +31,7 @@ export function ThemeToggle({
 
   if (!supportsSunny) {
     return (
-      <div className="inline-flex h-6 items-center justify-center">
+      <div className="inline-flex h-[30px] w-6 items-center justify-center">
         <button
           type="button"
           aria-label={themeLabel}
@@ -68,8 +69,17 @@ export function ThemeToggle({
     )
   }
 
+  // Reserve real width in the nav row when the quiet button is visible, so
+  // siblings (Clean, Seye Alexander) slide left smoothly instead of being
+  // overlapped by the absolute quiet pill.
+  const reservedWidth = supportsSunny && showQuietButton ? 64 : 24
+
   return (
-    <div className="relative inline-flex h-[30px] w-6 items-center justify-center">
+    <motion.div
+      animate={{ width: reservedWidth }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className="relative inline-flex h-[30px] items-center justify-end"
+    >
       <motion.button
         type="button"
         aria-label={themeLabel}
@@ -134,11 +144,15 @@ export function ThemeToggle({
           animate={{
             opacity: showQuietButton ? 1 : 0,
             scale: showQuietButton ? 1 : 0.72,
-            x: showQuietButton ? -10 : 0,
+            x: showQuietButton ? 0 : 6,
           }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
+          // Anchor the quiet button to the LEFT edge of the reserved
+          // container instead of `right-full`. That keeps it inside the
+          // 64px reserved width and stops it overlapping the nav items to
+          // the left (Seye Alexander).
           className={cn(
-            'pointer-events-none absolute right-full top-1/2 inline-flex h-[30px] w-[30px] -translate-y-1/2 items-center justify-center overflow-hidden rounded-full text-[#244437] shadow-[0_12px_24px_rgba(36,68,55,0.10)] backdrop-blur-md transition-all duration-300 ease-out active:scale-95',
+            'pointer-events-none absolute left-0 top-1/2 inline-flex h-[30px] w-[30px] -translate-y-1/2 items-center justify-center overflow-hidden rounded-full text-[#244437] shadow-[0_12px_24px_rgba(36,68,55,0.10)] backdrop-blur-md transition-all duration-300 ease-out active:scale-95',
             isQuiet
               ? 'bg-[rgba(237,243,240,0.82)] text-[#183628]'
               : 'bg-[rgba(248,251,249,0.76)] text-[#244437]',
@@ -160,6 +174,6 @@ export function ThemeToggle({
           </motion.span>
         </motion.button>
       ) : null}
-    </div>
+    </motion.div>
   )
 }

@@ -410,7 +410,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`block p-6 md:p-8 transition-transform duration-200 hover:scale-[1.02] ${variantStyles[project.variant]}`}
+      className={`flex h-full flex-col p-6 md:p-8 transition-transform duration-200 hover:scale-[1.02] ${variantStyles[project.variant]}`}
       onClick={() => {
         playTapSound()
       }}
@@ -437,9 +437,10 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         </p>
       </div>
 
-      {/* Description */}
+      {/* Description — mt-auto pushes it to the bottom so cards in the
+          same row stay the same height regardless of copy length. */}
       <p
-        className={`font-geist-mono text-xs leading-relaxed ${subtitleStyles[project.variant]}`}
+        className={`mt-auto font-geist-mono text-xs leading-relaxed ${subtitleStyles[project.variant]}`}
       >
         {project.description}
       </p>
@@ -461,9 +462,13 @@ function ProjectGrid({ projects, bgClass }: ProjectGridProps) {
       viewport={{ margin: '-50px' }}
       variants={staggerContainer}
     >
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 items-stretch">
         {projects.map((project, index) => (
-          <motion.div key={project.id} variants={fadeInUp}>
+          <motion.div
+            key={project.id}
+            variants={fadeInUp}
+            className="h-full"
+          >
             <ProjectCard project={project} index={index} />
           </motion.div>
         ))}

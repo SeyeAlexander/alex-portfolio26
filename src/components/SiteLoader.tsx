@@ -7,17 +7,33 @@ interface SiteLoaderProps {
   duration?: number
 }
 
+const LOADER_FLAG_KEY = 'seye:loader-shown'
+
 export function SiteLoader({ onComplete, duration = 2800 }: SiteLoaderProps) {
-  const [isVisible, setIsVisible] = useState(true)
+  // Initialise from sessionStorage so we never animate the intro again after
+  // it has played once in the current tab. Navigating from /clean or /notes
+  // back to "/" goes straight to the hero without re-triggering this loader.
+  const [isVisible, setIsVisible] = useState(() => {
+    if (typeof window === 'undefined') return true
+    return window.sessionStorage.getItem(LOADER_FLAG_KEY) !== '1'
+  })
 
   useEffect(() => {
+    if (!isVisible) {
+      onComplete?.()
+      return
+    }
+
     const timer = setTimeout(() => {
       setIsVisible(false)
+      if (typeof window !== 'undefined') {
+        window.sessionStorage.setItem(LOADER_FLAG_KEY, '1')
+      }
       onComplete?.()
     }, duration)
 
     return () => clearTimeout(timer)
-  }, [duration, onComplete])
+  }, [duration, onComplete, isVisible])
 
   return (
     <AnimatePresence>

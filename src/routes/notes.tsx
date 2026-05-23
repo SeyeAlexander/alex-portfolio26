@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { ArrowUp } from 'lucide-react'
 import { useState } from 'react'
 import { CleanLayout } from '@/components/clean/CleanLayout'
 import { SoundTester } from '@/components/clean/SoundTester'
@@ -32,13 +33,13 @@ function NotesPage() {
         </h2>
         <p className="max-w-2xl text-sm leading-7 text-black/62 dark:text-white/62">
           List first, detail second. Click a note and the full entry appears
-          below.
+          on the right.
         </p>
       </section>
 
-      <section className="grid gap-10 border-t border-black/10 pt-10 dark:border-white/10 lg:grid-cols-[160px_minmax(0,1fr)]">
+      <section className="grid gap-10 border-t border-black/10 pt-10 dark:border-white/10 lg:grid-cols-[200px_minmax(0,1fr)]">
         <aside className="lg:sticky lg:top-10 lg:self-start">
-          <div className="space-y-2">
+          <div className="space-y-3">
             {NOTES.map((note) => {
               const active = selectedNote.id === note.id
               return (
@@ -46,17 +47,29 @@ function NotesPage() {
                   key={note.id}
                   type="button"
                   onClick={() => setActiveNote(note.id)}
-                  className="block text-left"
+                  className="block w-full text-left"
                 >
-                  <span
-                    className={
-                      active
-                        ? 'text-[13px] text-black dark:text-white'
-                        : 'text-[13px] text-black/45 transition-colors hover:text-black dark:text-white/45 dark:hover:text-white'
-                    }
-                  >
-                    {note.shortTitle}
-                  </span>
+                  <div className="space-y-1">
+                    <p
+                      className={
+                        'font-geist-mono text-[10px] uppercase tracking-[0.24em] ' +
+                        (active
+                          ? 'text-black/70 dark:text-white/70'
+                          : 'text-black/35 dark:text-white/35')
+                      }
+                    >
+                      {note.label}
+                    </p>
+                    <p
+                      className={
+                        active
+                          ? 'text-[13px] leading-snug text-black dark:text-white'
+                          : 'text-[13px] leading-snug text-black/45 transition-colors lg:hover:text-black dark:text-white/45 dark:lg:hover:text-white'
+                      }
+                    >
+                      {note.shortTitle}
+                    </p>
+                  </div>
                 </button>
               )
             })}
@@ -64,17 +77,22 @@ function NotesPage() {
         </aside>
 
         <article className="space-y-8">
-          <div className="space-y-2">
-            <p className="font-geist-mono text-[11px] uppercase tracking-[0.28em] text-black/45 dark:text-white/45">
-              {selectedNote.label}
-            </p>
+          <header className="space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="font-geist-mono text-[11px] uppercase tracking-[0.28em] text-black/45 dark:text-white/45">
+                {selectedNote.label} · {selectedNote.tag}
+              </p>
+              <p className="font-geist-mono text-[11px] tracking-[0.16em] text-black/40 dark:text-white/40">
+                {selectedNote.date}
+              </p>
+            </div>
             <h3 className="max-w-2xl text-[28px] font-medium leading-[1.18] tracking-[-0.03em]">
               {selectedNote.title}
             </h3>
             <p className="max-w-2xl text-[13px] leading-7 text-black/62 dark:text-white/62">
               {selectedNote.subtitle}
             </p>
-          </div>
+          </header>
 
           <div className="max-w-2xl space-y-5 text-[14px] leading-7 text-black/78 dark:text-white/78">
             {selectedNote.paragraphs.map((paragraph) => (
@@ -83,6 +101,19 @@ function NotesPage() {
           </div>
 
           {selectedNote.id === 'sound' ? <SoundTester /> : null}
+
+          <div className="flex justify-end pt-6 lg:hidden">
+            <button
+              type="button"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
+              aria-label="Scroll to top"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/15 bg-white/90 text-black/70 shadow-sm transition-colors active:scale-[0.97] lg:hover:border-black/30 lg:hover:text-black dark:border-white/15 dark:bg-black/55 dark:text-white/75 dark:lg:hover:text-white"
+            >
+              <ArrowUp className="h-4 w-4" strokeWidth={2.2} />
+            </button>
+          </div>
         </article>
       </section>
     </CleanLayout>
@@ -93,6 +124,7 @@ const NOTES = [
   {
     id: 'sound',
     label: 'Note 001',
+    date: 'Feb 14, 2026',
     title: 'Why click sounds might deserve a comeback',
     shortTitle: 'Sound clicks',
     tag: 'Audio / Interaction',
@@ -108,6 +140,7 @@ const NOTES = [
   {
     id: 'motion',
     label: 'Note 002',
+    date: 'Mar 03, 2026',
     title: 'Animation should finish a thought',
     shortTitle: 'Motion as clarity',
     tag: 'Motion / Product Feel',
@@ -125,6 +158,7 @@ const NOTES = [
   {
     id: 'restraint',
     label: 'Note 003',
+    date: 'Apr 18, 2026',
     title: 'Minimal interfaces still need a point of view',
     shortTitle: 'Minimalism and taste',
     tag: 'Design / Restraint',
@@ -138,6 +172,25 @@ const NOTES = [
       'There is also a misconception that polished work must announce itself through complexity. I think the opposite is often true. Fine craft tends to feel natural enough that people stop noticing it as a separate layer. They simply feel that the page is calm, readable, and trustworthy. That reaction is often the result of many tiny edits, not a single dramatic move.',
       'So when I say I like clean interfaces, I do not mean barebones for the sake of being barebones. I mean edited, specific, and resolved. I mean work where every remaining element earns its place and the overall experience suggests that someone cared about the details long after the basic layout was already working.',
       'That kind of minimalism is harder than excess because there is less to hide behind. The work has to stand on typography, spacing, tempo, and judgment. When it does, even a very sparse interface can still carry identity, warmth, and a point of view strong enough to be remembered.',
+    ],
+  },
+  {
+    id: 'shipping',
+    label: 'Note 004',
+    date: 'May 22, 2026',
+    title: 'Notes I leave myself before shipping',
+    shortTitle: 'Before shipping',
+    tag: 'Craft / Workflow',
+    subtitle:
+      'A small checklist I run through quietly before pushing a component or a page.',
+    paragraphs: [
+      'I have started keeping a short list in my head that I run through before I push almost anything. It is not a process. It is closer to a set of questions I have learned to ask myself, usually after I have already convinced myself the work is done.',
+      'The first one is the easiest to skip. Does this look the same on a phone? Not just functionally, but in feel. A pill that reads as elegant at 1440px can look cramped or oversized at 390px, and that gap is where polished work quietly falls apart. I check the smallest screen first now, not last.',
+      'The second is about motion. Is anything moving that does not need to? Hover states, entrance animations, scroll-linked tricks. They are easy to add and hard to subtract once they are in. If a motion does not change how the user understands the interface, I take it out before anyone else sees it.',
+      'The third is about silence. Have I left enough space around the content for it to breathe, or did I fill every gap because empty space made me nervous? The answer is usually that I filled too much. Most of my best edits late at night are deletions.',
+      'The fourth is about copy. Is the smallest text on the page still considered? Microcopy is where you can tell whether someone was paying attention. Labels, empty states, error messages, the tag under a card. Those are the lines that decide whether the product reads as thoughtful or just well-designed.',
+      'The last one is about taste, and it is the one I cannot really teach. I try to ask whether I would still respect this if I came back to it in a month. Whether it would still feel like me, or whether I leaned on a trend that will date quickly. If I am unsure, I sleep on it. Whatever survives the next morning usually deserves to ship.',
+      'None of this is original. But running through it has saved me from pushing work I would have quietly regretted, and that is most of what taste is anyway. Small refusals, repeated until they become invisible.',
     ],
   },
 ]

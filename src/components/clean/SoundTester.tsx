@@ -119,7 +119,7 @@ export function SoundTester() {
           type="button"
           onClick={toggleSound}
           aria-label={enabled ? 'Mute sounds' : 'Enable sounds'}
-          className="inline-flex p-2 items-center justify-center rounded-full border border-current/10 bg-black text-white shadow-[0_14px_30px_rgba(0,0,0,0.14)] transition-colors hover:bg-black/90 dark:bg-[#b9c1cb] dark:text-[#111214] dark:shadow-[0_10px_28px_rgba(0,0,0,0.18)] dark:hover:bg-[#c1c8d1]"
+          className="inline-flex p-2 items-center justify-center rounded-full border border-current/10 bg-black text-white shadow-[0_14px_30px_rgba(0,0,0,0.14)] transition-colors lg:hover:bg-black/90 dark:bg-[#b9c1cb] dark:text-[#111214] dark:shadow-[0_10px_28px_rgba(0,0,0,0.18)] dark:lg:hover:bg-[#c1c8d1]"
         >
           <AudioLinesIcon isPlaying={enabled} />
         </button>
@@ -137,15 +137,15 @@ export function SoundTester() {
               }
             }}
             className={[
-              'group relative overflow-hidden rounded-[18px] border text-left transition-transform duration-300 hover:-translate-y-0.5 active:scale-[0.985]',
+              'group relative overflow-hidden rounded-[18px] border text-left transition-transform duration-300 lg:hover:-translate-y-0.5 active:scale-[0.985]',
               'border-black/8 bg-black text-white shadow-[0_18px_40px_rgba(17,17,18,0.14)] dark:border-[#d7dde5]/25 dark:bg-[linear-gradient(180deg,#c7ced6,#b7c0cb)] dark:text-[#111214] dark:shadow-[0_18px_40px_rgba(0,0,0,0.18)]',
               sound.size === 'large'
                 ? 'min-h-[228px] md:row-span-2'
                 : 'min-h-[108px]',
             ].join(' ')}
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.10),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_32%)] opacity-70 transition-opacity duration-500 group-hover:opacity-100 dark:bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.24),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(55,65,81,0.10),transparent_32%)]" />
-            <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.10),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_32%)] opacity-70 transition-opacity duration-500 lg:group-hover:opacity-100 dark:bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.24),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(55,65,81,0.10),transparent_32%)]" />
+            <div className="absolute inset-0 opacity-0 transition-opacity duration-500 lg:group-hover:opacity-100">
               <div className="absolute inset-y-0 left-[-20%] w-[40%] rotate-14 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent)] blur-lg dark:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.20),transparent)]" />
             </div>
 

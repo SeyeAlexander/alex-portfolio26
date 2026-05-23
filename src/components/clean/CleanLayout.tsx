@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useSounds } from '@/hooks/useSounds'
@@ -31,6 +32,12 @@ type CleanLayoutProps = {
   title: string
   active: 'clean' | 'notes'
   enableSunnyMode?: boolean
+  /**
+   * Pixels to translate the inner content (nav + main) to the left.
+   * Used by /clean to slide the layout aside when a component drawer opens
+   * on the right. 0 = no shift.
+   */
+  contentShift?: number
   children: React.ReactNode
 }
 
@@ -38,6 +45,7 @@ export function CleanLayout({
   title,
   active,
   enableSunnyMode = false,
+  contentShift = 0,
   children,
 }: CleanLayoutProps) {
   const [theme, setTheme] = useState<CleanTheme>(() =>
@@ -102,7 +110,7 @@ export function CleanLayout({
   }
 
   return (
-    <div className={cn('min-h-screen', isDark && 'dark')}>
+    <div className={cn('clean-surface min-h-screen', isDark && 'dark')}>
       <div
         className="min-h-screen text-black transition-colors dark:text-white"
         style={{
@@ -129,11 +137,17 @@ export function CleanLayout({
           </>
         ) : null}
 
-        <div className="mx-auto max-w-[820px] px-5 pb-24 pt-8 sm:px-8">
-          <header className="relative z-10 mb-24 flex items-center justify-between gap-6 transition-all duration-300 ease-out">
-            <h1 className="text-xl font-medium tracking-[-0.03em]">{title}.</h1>
+        <motion.div
+          animate={{ x: -contentShift }}
+          transition={{ type: 'spring', stiffness: 280, damping: 32, mass: 0.85 }}
+          className="mx-auto max-w-[820px] px-5 pb-24 pt-8 sm:px-8"
+        >
+          <header className="relative z-10 mb-24 flex min-h-[30px] items-center justify-between gap-6 transition-all duration-300 ease-out">
+            <h1 className="text-xl font-medium leading-none tracking-[-0.03em]">
+              {title}.
+            </h1>
 
-            <nav className="flex items-center gap-4 pt-1 text-right transition-all duration-300 ease-out">
+            <nav className="flex min-h-[30px] items-center gap-4 text-right transition-all duration-300 ease-out">
               <PageLink to="/clean" active={active === 'clean'}>
                 Clean
               </PageLink>
@@ -142,7 +156,7 @@ export function CleanLayout({
               </PageLink>
               <Link
                 to="/"
-                className="text-sm text-black/45 transition-colors hover:text-black dark:text-white/45 dark:hover:text-white"
+                className="text-sm text-black/45 transition-colors lg:hover:text-black dark:text-white/45 dark:lg:hover:text-white"
               >
                 Seye Alexander
               </Link>
@@ -159,7 +173,7 @@ export function CleanLayout({
           </header>
 
           <main className="relative z-10 space-y-12">{children}</main>
-        </div>
+        </motion.div>
       </div>
     </div>
   )
@@ -181,7 +195,7 @@ function PageLink({
         'inline-flex items-center text-sm transition-colors',
         active
           ? 'text-black dark:text-white hidden'
-          : 'text-black/45 hover:text-black dark:text-white/45 dark:hover:text-white',
+          : 'text-black/45 lg:hover:text-black dark:text-white/45 dark:lg:hover:text-white',
       )}
     >
       <span>{children}</span>

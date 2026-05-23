@@ -1,13 +1,18 @@
+import { Link } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Boxes, NotebookText } from 'lucide-react'
 import { useSounds } from '../hooks/useSounds'
 
+// "Projects" is intentionally pointed at #studio (not #projects) — Studio
+// is the top half of the halved "Built on my own time" section and the
+// fronter sits at its top, so landing users there is the more honest entry.
 const navItems = [
   { id: 'hero', icon: 'home', label: 'Home' },
   { id: 'stats', icon: 'stats', label: 'Stats' },
   { id: 'me', icon: 'about', label: 'About' },
   { id: 'resume', icon: 'resume', label: 'Experience' },
-  { id: 'projects', icon: 'projects', label: 'Projects' },
+  { id: 'studio', icon: 'projects', label: 'Projects' },
 ]
 
 function NavIcon({ icon }: { icon: string }) {
@@ -265,7 +270,28 @@ export function FloatingNav() {
               </motion.button>
             ))}
 
-            {/* Divider */}
+            {/* Route links — desktop only; keeps the mobile bar shorter */}
+            <div className="hidden md:contents">
+              <div className="w-px h-6 bg-white/20 mx-1" />
+              <Link
+                to="/clean"
+                onClick={() => playSound('tap')}
+                className="relative p-3 rounded-full text-white/60 transition-colors duration-200 hover:bg-white/10 hover:text-white"
+                title="Clean"
+              >
+                <Boxes className="w-5 h-5" strokeWidth={2} />
+              </Link>
+              <Link
+                to="/notes"
+                onClick={() => playSound('tap')}
+                className="relative p-3 rounded-full text-white/60 transition-colors duration-200 hover:bg-white/10 hover:text-white"
+                title="Notes"
+              >
+                <NotebookText className="w-5 h-5" strokeWidth={2} />
+              </Link>
+            </div>
+
+            {/* Divider — separates nav from the sound utility */}
             <div className="w-px h-6 bg-white/20 mx-1" />
 
             {/* Sound Toggle */}
