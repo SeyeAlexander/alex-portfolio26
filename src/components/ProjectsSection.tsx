@@ -2,6 +2,8 @@ import { motion } from 'framer-motion'
 import { Github, ChevronLeft, ChevronRight, X, Globe } from 'lucide-react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useEffect, useRef, useState } from 'react'
+import { BuildHeader } from './BuildBlock'
+import { BuildsDivider } from './BuildsDivider'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -15,7 +17,7 @@ const fadeInUp = {
   },
 }
 
-const screenshots = [
+const textflowScreenshots = [
   '/Screenshot 2026-02-04 at 01.51.44.png',
   '/Screenshot 2026-02-04 at 01.51.51.png',
   '/Screenshot 2026-02-04 at 01.52.13.png',
@@ -32,55 +34,49 @@ const screenshots = [
   '/Screenshot 2026-02-04 at 01.58.29.png',
 ]
 
+const asoScreenshots = [
+  '/aso/Screenshot 2026-05-28 at 18.00.40.png',
+  '/aso/Screenshot 2026-05-28 at 18.00.47.png',
+  '/aso/Screenshot 2026-05-28 at 18.01.03.png',
+  '/aso/Screenshot 2026-05-28 at 18.01.11.png',
+  '/aso/Screenshot 2026-05-28 at 18.01.19.png',
+  '/aso/Screenshot 2026-05-28 at 18.03.34.png',
+  '/aso/Screenshot 2026-05-28 at 18.03.43.png',
+  '/aso/Screenshot 2026-05-28 at 18.03.49.png',
+]
+
+type ModalState = { items: string[]; index: number; alt: string } | null
+
 export function ProjectsSection() {
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
-    null,
-  )
-  // const marqueeControls = useAnimationControls()
+  const [modal, setModal] = useState<ModalState>(null)
 
-  // Start marquee animation
-  // const startMarquee = () => {
-  //   marqueeControls.start({
-  //     x: '-50%',
-  //     transition: {
-  //       duration: 40,
-  //       ease: 'linear',
-  //       repeat: Infinity,
-  //     },
-  //   })
-  // }
-
-  // Handle modal navigation
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation()
-    if (selectedImageIndex !== null) {
-      setSelectedImageIndex((prev) =>
-        prev === 0 ? screenshots.length - 1 : (prev as number) - 1,
-      )
-    }
+    setModal((cur) =>
+      cur
+        ? {
+            ...cur,
+            index: cur.index === 0 ? cur.items.length - 1 : cur.index - 1,
+          }
+        : cur,
+    )
   }
-
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation()
-    if (selectedImageIndex !== null) {
-      setSelectedImageIndex((prev) =>
-        prev === screenshots.length - 1 ? 0 : (prev as number) + 1,
-      )
-    }
+    setModal((cur) =>
+      cur ? { ...cur, index: (cur.index + 1) % cur.items.length } : cur,
+    )
   }
 
   return (
     <section id="projects" className="relative z-10 bg-black py-16 md:py-24">
-      {/* Grid lines */}
-      <div className="absolute left-[20px] inset-y-0 w-px bg-white/20" />
-      <div className="absolute right-[20px] inset-y-0 w-px bg-white/20" />
-      <div className="absolute top-0 left-[20px] right-[20px] h-px bg-white/20" />
+      {/* Grid lines — bottom only. Top + left + right removed since the
+          BuildsDivider strips already provide the visual break above and
+          between projects. */}
       <div className="absolute bottom-0 left-[20px] right-[20px] h-px bg-white/20" />
 
-      {/* Crosshairs */}
+      {/* Bottom corner crosshairs — anchor the remaining horizontal line. */}
       {[
-        'top-[-5px] left-[20px]',
-        'top-[-5px] right-[9px]',
         'bottom-[-5px] left-[20px]',
         'bottom-[-5px] right-[9px]',
       ].map((pos, i) => (
@@ -93,19 +89,10 @@ export function ProjectsSection() {
         </div>
       ))}
 
+      {/* -------- Build 02 — Loupe (ASO Audit Agent). Title stack on the
+          left, "02" pushed far right at the bottom of the stack. Everything
+          below sits at the previous container width, unchanged. -------- */}
       <div className="px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
-        {/* Subheader — Studio above already carries the umbrella fronter,
-            so we keep this small and let TextFlow's card carry the weight. */}
-        <div className="mb-8 md:mb-10 flex items-center gap-3">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange/80" />
-          <span className="font-geist-mono text-[11px] uppercase tracking-[0.3em] text-white/55">
-            Featured Build · Currently in the forge
-          </span>
-        </div>
-
-        {/* TextFlow block — no outer rounded container. Content sits on
-            the section's bg and inner panels carry the architectural
-            crosshair language. */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -113,23 +100,170 @@ export function ProjectsSection() {
           variants={fadeInUp}
           className="relative"
         >
-          {/* Top row: status pill */}
-          <div className="mb-8 flex items-center justify-between">
-            <span className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/8 px-3 py-1">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-500" />
-              <span className="font-geist-mono text-[10px] uppercase tracking-[0.26em] text-green-500">
-                Live
-              </span>
-            </span>
+          {/* Header row: title stack left, big "02" far right, bottom-aligned */}
+          <BuildHeader number="02" numberSide="right">
+            <div className="flex flex-col items-start gap-3">
+              <h3 className="font-korium text-6xl md:text-8xl lg:text-[110px] font-bold text-cream leading-none">
+                Loupe
+              </h3>
+              <p className="font-geist text-xl md:text-2xl lg:text-3xl text-white/70 leading-tight">
+                ASO Audit Agent
+              </p>
+            </div>
+          </BuildHeader>
+
+          {/* Philosophy grid */}
+          <div className="mt-12 mb-12 md:mt-16 grid grid-cols-1 gap-px bg-white/12 md:grid-cols-2">
+            {[
+              {
+                title: 'Agent-Led Audit',
+                body: 'A Mastra AI agent applies an App Store Optimization methodology skill to score every dimension and write the recommendations.',
+              },
+              {
+                title: 'Guardrails First',
+                body: "A deterministic TypeScript engine measures the facts, clamps the agent's scores, recomputes the weighted total, and serves as a full fallback.",
+              },
+              {
+                title: 'Skill-as-Methodology',
+                body: 'The 10-dimension ASO rubric lives as a Mastra workspace skill the agent consumes — editable by non-engineers, not buried in code.',
+              },
+              {
+                title: 'Idiomatic Mastra',
+                body: 'Tools own external IO, the workflow orchestrates four steps, the agent + skill do the judgment, Zod re-validates the shape.',
+              },
+            ].map((entry) => (
+              <CrosshairPanel key={entry.title}>
+                <h4 className="font-geist text-base font-bold text-white mb-1.5">
+                  {entry.title}
+                </h4>
+                <p className="font-geist-mono text-[12px] leading-6 text-white/55">
+                  {entry.body}
+                </p>
+              </CrosshairPanel>
+            ))}
           </div>
 
-          {/* Title */}
-          <h3 className="font-korium text-6xl md:text-8xl lg:text-[110px] font-bold text-cream leading-none mb-10">
-            TextFlow
-          </h3>
+          {/* Actions */}
+          <div className="mb-10 flex flex-wrap gap-3">
+            <a
+              href="https://loupe.seyealexander.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-geist text-sm font-bold text-black transition-colors hover:bg-cream"
+            >
+              <Globe size={18} />
+              Live Demo
+            </a>
+            <a
+              href="https://github.com/SeyeAlexander/aso-audit-agent"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 font-geist text-sm font-bold text-white transition-colors hover:border-white/30 hover:bg-white/[0.04]"
+            >
+              <Github size={18} />
+              View Code
+            </a>
+          </div>
 
-          {/* Philosophy grid — sharp crosshair panels */}
-          <div className="mb-12 grid grid-cols-1 gap-px bg-white/12 md:grid-cols-2">
+          {/* Tech stack */}
+          <div className="mb-12 flex flex-wrap gap-2">
+            {[
+              'Mastra',
+              'TypeScript',
+              'React',
+              'Vite',
+              'Tailwind CSS',
+              'NVIDIA NIM',
+              'Llama 3.1 8B',
+              'Zod',
+              'Express',
+              'Firecrawl',
+            ].map((tech) => (
+              <span
+                key={tech}
+                className="inline-flex items-center border border-white/15 px-3 py-1.5 font-geist-mono text-[11px] text-white/70 transition-colors hover:border-orange/60 hover:text-orange"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {/* Technical features */}
+          <div className="grid grid-cols-1 gap-px bg-white/12 md:grid-cols-3">
+            {[
+              {
+                title: 'Agent + Skill',
+                body: 'Mastra agent uses the ASO methodology skill as its system prompt — it scores and recommends, not just refines.',
+                dot: 'bg-green-500',
+              },
+              {
+                title: 'Deterministic Guardrail',
+                body: 'Clamps scores to 0–10, recomputes the weighted /100 in code, Zod-validates, and falls back gracefully.',
+                dot: 'bg-orange',
+              },
+              {
+                title: 'Two-Pass Refinement',
+                body: 'Parallel scoring + recommendation passes; deterministic before/after survive any agent omission.',
+                dot: 'bg-cream',
+              },
+            ].map((entry) => (
+              <CrosshairPanel key={entry.title}>
+                <div className="mb-2 flex items-center gap-2">
+                  <span className={`inline-block h-1.5 w-1.5 ${entry.dot}`} />
+                  <h4 className="font-geist text-sm font-bold text-white">
+                    {entry.title}
+                  </h4>
+                </div>
+                <p className="font-geist-mono text-[11px] leading-6 text-white/50">
+                  {entry.body}
+                </p>
+              </CrosshairPanel>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Loupe coverflow */}
+      <div className="mt-12 md:mt-16 w-full">
+        <CoverflowCarousel
+          items={asoScreenshots}
+          altPrefix="Loupe screenshot"
+          onSelect={(idx) =>
+            setModal({ items: asoScreenshots, index: idx, alt: 'Loupe' })
+          }
+        />
+      </div>
+
+      {/* -------- Divider: Loupe → TextFlow (reusing the same crosshair strip
+          that sits between Studio and Projects, for visual consistency) -------- */}
+      <div className="my-12 md:my-16">
+        <BuildsDivider />
+      </div>
+
+      {/* -------- Build 03 — TextFlow. "03" on the far left, the title pushed
+          to the far right. Content below at full width.
+          The relative wrapper carries the left + right vertical grid lines
+          that run only along TextFlow's stretch (not Loupe's), so the section
+          frames its second build without re-framing the first. -------- */}
+      <div className="relative">
+      <div className="pointer-events-none absolute left-[20px] inset-y-0 w-px bg-white/20" />
+      <div className="pointer-events-none absolute right-[20px] inset-y-0 w-px bg-white/20" />
+
+      <div className="px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ margin: '-50px' }}
+          variants={fadeInUp}
+          className="relative"
+        >
+          <BuildHeader number="03" numberSide="left">
+            <h3 className="font-korium text-6xl md:text-8xl lg:text-[110px] font-bold text-cream leading-none text-right">
+              TextFlow
+            </h3>
+          </BuildHeader>
+
+          <div className="mt-12 md:mt-16 mb-12 grid grid-cols-1 gap-px bg-white/12 md:grid-cols-2">
             {[
               {
                 title: 'Zero to One',
@@ -159,7 +293,6 @@ export function ProjectsSection() {
             ))}
           </div>
 
-          {/* Actions */}
           <div className="mb-10 flex flex-wrap gap-3">
             <a
               href="https://textflow.seyealexander.dev/dashboard"
@@ -181,7 +314,6 @@ export function ProjectsSection() {
             </a>
           </div>
 
-          {/* Tech stack — square (not rounded) sharp pills with thin border */}
           <div className="mb-12 flex flex-wrap gap-2">
             {[
               'Next.js',
@@ -202,7 +334,6 @@ export function ProjectsSection() {
             ))}
           </div>
 
-          {/* Technical features — sharp crosshair panels */}
           <div className="grid grid-cols-1 gap-px bg-white/12 md:grid-cols-3">
             {[
               {
@@ -223,9 +354,7 @@ export function ProjectsSection() {
             ].map((entry) => (
               <CrosshairPanel key={entry.title}>
                 <div className="mb-2 flex items-center gap-2">
-                  <span
-                    className={`inline-block h-1.5 w-1.5 ${entry.dot}`}
-                  />
+                  <span className={`inline-block h-1.5 w-1.5 ${entry.dot}`} />
                   <h4 className="font-geist text-sm font-bold text-white">
                     {entry.title}
                   </h4>
@@ -239,47 +368,53 @@ export function ProjectsSection() {
         </motion.div>
       </div>
 
+      {/* TextFlow coverflow */}
       <div className="mt-12 md:mt-16 w-full">
         <CoverflowCarousel
-          items={screenshots}
-          onSelect={(idx) => setSelectedImageIndex(idx)}
+          items={textflowScreenshots}
+          altPrefix="TextFlow screenshot"
+          onSelect={(idx) =>
+            setModal({
+              items: textflowScreenshots,
+              index: idx,
+              alt: 'TextFlow',
+            })
+          }
         />
       </div>
+      </div>{/* /TextFlow framed wrapper */}
 
-      {/* Image Modal */}
+      {/* Image Modal — shared by both projects via the `modal` state. */}
       <Dialog.Root
-        open={selectedImageIndex !== null}
-        onOpenChange={(open) => !open && setSelectedImageIndex(null)}
+        open={modal !== null}
+        onOpenChange={(open) => !open && setModal(null)}
       >
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
           <Dialog.Content className="fixed inset-0 z-50 flex items-center justify-center p-4 outline-none">
             <div className="relative w-full max-w-5xl flex flex-col items-center">
-              {/* Close Button - more prominent */}
               <button
-                onClick={() => setSelectedImageIndex(null)}
+                onClick={() => setModal(null)}
                 className="absolute -top-12 right-0 md:-right-12 z-50 p-2 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-all border border-white/20"
                 aria-label="Close modal"
               >
                 <X size={24} />
               </button>
 
-              {/* Main Image */}
-              {selectedImageIndex !== null && (
+              {modal && (
                 <div className="relative w-full aspect-video md:aspect-auto md:max-h-[70vh] flex items-center justify-center bg-black/50 rounded-lg border border-white/10 overflow-hidden">
                   <motion.img
-                    key={selectedImageIndex}
+                    key={`${modal.alt}-${modal.index}`}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3 }}
-                    src={screenshots[selectedImageIndex]}
-                    alt="Screenshot Preview"
+                    src={modal.items[modal.index]}
+                    alt={`${modal.alt} screenshot ${modal.index + 1}`}
                     className="w-full h-full object-contain"
                   />
                 </div>
               )}
 
-              {/* Navigation Controls */}
               <button
                 onClick={handlePrev}
                 className="absolute left-2 md:-left-16 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 hover:bg-white hover:text-black text-white border border-white/10 backdrop-blur-md transition-all z-50"
@@ -296,20 +431,23 @@ export function ProjectsSection() {
                 <ChevronRight size={24} />
               </button>
 
-              {/* Thumbnails */}
-              <div className="mt-8 flex gap-3 overflow-x-auto max-w-full pb-2 px-4 scrollbar-hide">
-                {screenshots.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImageIndex(idx)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      idx === selectedImageIndex
-                        ? 'bg-orange w-12'
-                        : 'bg-white/20 w-2 hover:bg-white/40'
-                    }`}
-                  />
-                ))}
-              </div>
+              {modal && (
+                <div className="mt-8 flex gap-3 overflow-x-auto max-w-full pb-2 px-4 scrollbar-hide">
+                  {modal.items.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() =>
+                        setModal((cur) => (cur ? { ...cur, index: idx } : cur))
+                      }
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        idx === modal.index
+                          ? 'bg-orange w-12'
+                          : 'bg-white/20 w-2 hover:bg-white/40'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </Dialog.Content>
         </Dialog.Portal>
@@ -323,15 +461,12 @@ export function ProjectsSection() {
 //
 // Sharp-edged content panel framed by the site's architectural crosshair
 // language: tiny + marks at each corner, 1px hairlines between siblings
-// (provided by the parent grid's `gap-px bg-white/12` trick). Lives inside
-// the TextFlow card to keep the visual language consistent with Stats,
-// Resume, and the Studio section above.
+// (the parent grid's `gap-px bg-white/12` trick).
 // ---------------------------------------------------------------------------
 
 function CrosshairPanel({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative bg-black p-5">
-      {/* Crosshair marks at each corner */}
       {[
         '-top-[5px] -left-[5px]',
         '-top-[5px] -right-[5px]',
@@ -356,9 +491,8 @@ function CrosshairPanel({ children }: { children: React.ReactNode }) {
 // CoverflowCarousel
 //
 // Horizontal scroll-snap carousel where the centermost card is largest and
-// the neighbors scale down progressively based on distance from the viewport
-// center. Replaces the previous infinite marquee — gives focus instead of
-// constant ambient motion.
+// the neighbors scale + fade based on distance from the viewport centre.
+// Accepts `altPrefix` so each project's images get appropriate alt text.
 // ---------------------------------------------------------------------------
 
 const CARD_WIDTH = 280
@@ -367,26 +501,23 @@ const CARD_GAP = 8
 function CoverflowCarousel({
   items,
   onSelect,
+  altPrefix,
 }: {
   items: string[]
   onSelect: (idx: number) => void
+  altPrefix: string
 }) {
   const scrollerRef = useRef<HTMLDivElement | null>(null)
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([])
   const initialCenterRef = useRef(false)
   const rafIdRef = useRef<number | null>(null)
-  const [activeIndex, setActiveIndex] = useState(() => Math.floor(items.length / 2))
+  const [activeIndex, setActiveIndex] = useState(() =>
+    Math.floor(items.length / 2),
+  )
 
-  // Compute scale from absolute distance ratio (0 = centre, ±1 = one card
-  // away, ±2 = two away, ...). Smoothly decays, floored so far cards still
-  // hint at being there.
   const scaleFor = (ratio: number) => Math.max(1 - ratio * 0.22, 0.5)
-  // Opacity decays similarly, less aggressive than scale.
   const opacityFor = (ratio: number) => Math.max(1 - ratio * 0.18, 0.55)
 
-  // Layout pass. Writes transforms directly to DOM (refs) inside rAF — no
-  // React state per scroll event, which removes the per-frame re-render
-  // jitter that was visible when cards passed through the centre.
   useEffect(() => {
     const scroller = scrollerRef.current
     if (!scroller) return
@@ -396,7 +527,6 @@ function CoverflowCarousel({
       const rect = scroller.getBoundingClientRect()
       const centerX = rect.left + rect.width / 2
 
-      // First pass: collect each item's ratio and signed direction.
       const ratios: number[] = []
       const signs: number[] = []
       let nearest = 0
@@ -420,44 +550,35 @@ function CoverflowCarousel({
         }
       })
 
-      // Second pass: compute cumulative translateX so visual gaps stay
-      // uniform. Each scaled card leaves W*(1-scale) of empty layout space;
-      // half goes on each side. To close that gap we translate the card
-      // toward centre by the cumulative empty space between it and the
-      // nearest card on the centre-side.
       const translates: number[] = new Array(ratios.length).fill(0)
 
-      // Walk right from the active index.
       let accumRight = 0
       for (let i = nearest + 1; i < ratios.length; i++) {
         const prevScale = i === nearest + 1 ? 1 : scaleFor(ratios[i - 1])
         const myScale = scaleFor(ratios[i])
-        // Empty space between i-1 and i = right half of i-1 + left half of i
         const emptySpace =
-          (CARD_WIDTH * (1 - prevScale)) / 2 + (CARD_WIDTH * (1 - myScale)) / 2
+          (CARD_WIDTH * (1 - prevScale)) / 2 +
+          (CARD_WIDTH * (1 - myScale)) / 2
         accumRight += emptySpace
         translates[i] = -accumRight
       }
 
-      // Walk left from the active index.
       let accumLeft = 0
       for (let i = nearest - 1; i >= 0; i--) {
         const prevScale = i === nearest - 1 ? 1 : scaleFor(ratios[i + 1])
         const myScale = scaleFor(ratios[i])
         const emptySpace =
-          (CARD_WIDTH * (1 - prevScale)) / 2 + (CARD_WIDTH * (1 - myScale)) / 2
+          (CARD_WIDTH * (1 - prevScale)) / 2 +
+          (CARD_WIDTH * (1 - myScale)) / 2
         accumLeft += emptySpace
         translates[i] = accumLeft
       }
 
-      // Third pass: write final transforms straight to the DOM.
       itemRefs.current.forEach((el, i) => {
         if (!el) return
         const scale = scaleFor(ratios[i])
         const tx = translates[i]
         el.style.transform = `translateX(${tx}px) scale(${scale})`
-        // Keep transform-origin centred — we're now translating manually,
-        // origin doesn't need to do the work.
         el.style.transformOrigin = 'center center'
         el.style.opacity = String(opacityFor(ratios[i]))
       })
@@ -470,7 +591,6 @@ function CoverflowCarousel({
       rafIdRef.current = requestAnimationFrame(apply)
     }
 
-    // Initial center jump (auto, not smooth) so we open already centred.
     if (!initialCenterRef.current) {
       const middle = Math.floor(items.length / 2)
       const target = itemRefs.current[middle]
@@ -508,9 +628,6 @@ function CoverflowCarousel({
 
   return (
     <div className="relative">
-      {/* Scroll track. The horizontal padding equals (50vw - half a card
-          width) so the first and last cards can land at the visual centre
-          when snapped. */}
       <div
         ref={scrollerRef}
         className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto overflow-y-visible py-10"
@@ -538,24 +655,20 @@ function CoverflowCarousel({
               className="group/card relative shrink-0 snap-center"
               style={{
                 width: CARD_WIDTH,
-                // Initial transform — the rAF handler will overwrite this on
-                // first paint. No CSS transition so scroll-driven transforms
-                // follow the scroll position without lagging or jittering.
                 transform: 'translateX(0) scale(1)',
                 opacity: 1,
                 willChange: 'transform, opacity',
               }}
-              aria-label={`TextFlow screenshot ${idx + 1}`}
+              aria-label={`${altPrefix} ${idx + 1}`}
             >
               <div className="overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.02] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)]">
                 <img
                   src={src}
-                  alt={`TextFlow Screenshot ${idx + 1}`}
+                  alt={`${altPrefix} ${idx + 1}`}
                   className="block h-auto w-full object-cover"
                   draggable={false}
                 />
               </div>
-              {/* View overlay only on the centered card */}
               {idx === activeIndex ? (
                 <div className="pointer-events-none absolute inset-0 flex items-end justify-center pb-6 opacity-0 transition-opacity duration-300 group-hover/card:opacity-100">
                   <span className="rounded-full border border-white/20 bg-black/85 px-3 py-1.5 font-geist-mono text-[11px] text-white backdrop-blur">

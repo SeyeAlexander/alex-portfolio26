@@ -2,14 +2,15 @@ import { Link } from '@tanstack/react-router'
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import { useSounds } from '../hooks/useSounds'
+import { BuildHeader } from './BuildBlock'
 
 // ---------------------------------------------------------------------------
 // StudioSection
 //
 // Sits directly above ProjectsSection so the two read as one halved section —
 // "what I build on my own time." Studio carries the umbrella fronter; the
-// Projects section below keeps a small subhead so TextFlow stays the focal
-// point of that half.
+// Projects section below keeps small per-project subheads so the project
+// blocks (Loupe and TextFlow) carry the visual weight.
 //
 // Cards: cream on black, soft rounded (28px). Picked from a four-variant
 // comparison.
@@ -84,7 +85,7 @@ export function StudioSection() {
       ))}
 
       <div className="relative px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
-        {/* Umbrella fronter — frames Studio + the Projects (TextFlow) block below */}
+        {/* Umbrella fronter — frames Studio + the Projects (Loupe + TextFlow) block below */}
         <div className="mb-12 md:mb-16">
           <div className="mb-2 flex items-center gap-3">
             <span className="inline-block w-2 h-2 rounded-full bg-orange" />
@@ -102,15 +103,23 @@ export function StudioSection() {
             Built on my own time.
           </motion.h2>
           <p className="max-w-2xl font-geist text-base md:text-lg text-white/65 leading-relaxed">
-            Clean is a component lab. Notes is a small writing space. TextFlow,
-            just below, is the bigger build. Everything here is what I do when
-            no one's paying me to — the things that keep my taste sharp between
-            paid work.
+            Clean is a component lab. Notes is a small writing space. Loupe
+            and TextFlow, just below, are the bigger builds. Everything here is
+            what I do when no one's paying me to — the things that keep my
+            taste sharp between paid work.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 items-stretch">
+        {/* Build 01 header — "01" on the left, "Clean, Notes" stack pushed
+            to the far right, bottom-aligned with the number. */}
+        <BuildHeader number="01" numberSide="left">
+          <h3 className="self-end text-right font-korium text-6xl md:text-8xl lg:text-[110px] font-bold leading-none text-cream">
+            Clean, Notes
+          </h3>
+        </BuildHeader>
+
+        {/* Cards — full container width, exactly as before. */}
+        <div className="mt-10 md:mt-14 grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 items-stretch">
           {ENTRIES.map((entry, index) => (
             <motion.div
               key={entry.to}

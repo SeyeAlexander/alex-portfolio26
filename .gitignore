@@ -13,3 +13,6 @@ count.txt
 todos.json
 
 SOUND_TAPS_SETUP.md
+
+# Local agent workspace — never commit
+.claude/
