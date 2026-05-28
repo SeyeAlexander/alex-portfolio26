@@ -50,8 +50,7 @@ type ModalState = { items: string[]; index: number; alt: string } | null
 export function ProjectsSection() {
   const [modal, setModal] = useState<ModalState>(null)
 
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation()
+  const goPrev = () =>
     setModal((cur) =>
       cur
         ? {
@@ -60,13 +59,39 @@ export function ProjectsSection() {
           }
         : cur,
     )
-  }
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation()
+  const goNext = () =>
     setModal((cur) =>
       cur ? { ...cur, index: (cur.index + 1) % cur.items.length } : cur,
     )
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    goPrev()
   }
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    goNext()
+  }
+
+  // Arrow-key navigation while the modal is open. Bound once when it opens,
+  // detached when it closes — uses functional setModal so we don't need to
+  // re-bind on every navigation.
+  const modalOpen = modal !== null
+  useEffect(() => {
+    if (!modalOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        goPrev()
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        goNext()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modalOpen])
 
   return (
     <section id="projects" className="relative z-10 bg-black py-16 md:py-24">
@@ -524,8 +549,13 @@ function CoverflowCarousel({
 
     const apply = () => {
       rafIdRef.current = null
-      const rect = scroller.getBoundingClientRect()
-      const centerX = rect.left + rect.width / 2
+
+      // Use LAYOUT positions (offsetLeft) + scrollLeft to find which card is
+      // centered, not getBoundingClientRect — once the cumulative-translate
+      // pass runs, rects reflect the transformed positions and subpixel drift
+      // makes "nearest" flip between adjacent cards, which left the centered
+      // card without the "Click to expand" overlay.
+      const scrollCenter = scroller.scrollLeft + scroller.clientWidth / 2
 
       const ratios: number[] = []
       const signs: number[] = []
@@ -538,9 +568,8 @@ function CoverflowCarousel({
           signs[i] = 0
           return
         }
-        const r = el.getBoundingClientRect()
-        const itemCenter = r.left + r.width / 2
-        const dx = itemCenter - centerX
+        const layoutCenter = el.offsetLeft + el.offsetWidth / 2
+        const dx = layoutCenter - scrollCenter
         const absDx = Math.abs(dx)
         ratios[i] = absDx / (CARD_WIDTH + CARD_GAP)
         signs[i] = absDx < 8 ? 0 : dx < 0 ? -1 : 1
@@ -583,7 +612,11 @@ function CoverflowCarousel({
         el.style.opacity = String(opacityFor(ratios[i]))
       })
 
-      if (nearest !== activeIndex) setActiveIndex(nearest)
+      // Functional update — the effect only runs once, so capturing
+      // `activeIndex` from closure would go stale after the first state
+      // change and silently drop the final correct setState when the
+      // browser smooth-scrolls through intermediate positions on mount.
+      setActiveIndex((prev) => (prev === nearest ? prev : nearest))
     }
 
     const schedule = () => {
@@ -596,9 +629,12 @@ function CoverflowCarousel({
       const target = itemRefs.current[middle]
       if (target) {
         const elCenter = target.offsetLeft + target.offsetWidth / 2
+        // 'instant' bypasses the CSS scroll-behavior: smooth that Tailwind
+        // applies, so the carousel snaps to its centered position on mount
+        // instead of animating across all cards.
         scroller.scrollTo({
           left: elCenter - scroller.clientWidth / 2,
-          behavior: 'auto',
+          behavior: 'instant' as ScrollBehavior,
         })
         initialCenterRef.current = true
       }
@@ -652,14 +688,14 @@ function CoverflowCarousel({
                   scrollToIndex(idx)
                 }
               }}
-              className="group/card relative shrink-0 snap-center"
+              className="group/card relative shrink-0 snap-center rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               style={{
                 width: CARD_WIDTH,
                 transform: 'translateX(0) scale(1)',
                 opacity: 1,
                 willChange: 'transform, opacity',
               }}
-              aria-label={`${altPrefix} ${idx + 1}`}
+              aria-label={`${altPrefix} ${idx + 1} — press Enter to expand`}
             >
               <div className="overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.02] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)]">
                 <img
